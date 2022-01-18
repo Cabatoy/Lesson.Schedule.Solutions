@@ -11,6 +11,7 @@ namespace Saas.DataAccess.EntityFrameWorkCore.Models
     [Comment("FirmaBilgileri")]
     public class Company : IEntity
     {
+        
         public int Id { get; set; }
 
        // [EncryptColumn]
