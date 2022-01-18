@@ -10,11 +10,11 @@ namespace Saas.DataAccess.EntityFrameWorkCore.Models
 {
     public class CompanyUser :IEntity
     {
-        public int Id { get; set; }
+      
 
-       
+        public int Id { get; set; }
         
-        [Display(Name = "Department")]
+        [Display(Name = "Company")]
         public virtual int CompanyId { get; set; }
 
         [ForeignKey("CompanyId")]

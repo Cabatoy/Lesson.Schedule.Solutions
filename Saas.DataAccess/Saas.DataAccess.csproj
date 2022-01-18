@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="EntityFrameWorkCore\Generic\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Saas.DataAccess.EntityFrameWorkCore.DbContexts;
 
@@ -11,9 +12,10 @@ using Saas.DataAccess.EntityFrameWorkCore.DbContexts;
 namespace Saas.DataAccess.Migrations
 {
     [DbContext(typeof(GordionDbContext))]
-    partial class GordionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220118160027_initials")]
+    partial class initials
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

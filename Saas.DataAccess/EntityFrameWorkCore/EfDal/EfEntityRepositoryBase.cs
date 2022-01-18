@@ -33,13 +33,13 @@ namespace Saas.DataAccess.EntityFrameWorkCore.EfDal
             updatedEntity.State = EntityState.Modified;
             context.SaveChanges();
         }
-        public TEntity Get(Expression<Func<TEntity,bool>> filter)
+        public TEntity? Get(Expression<Func<TEntity,bool>> filter)
         {
             using var context = new TContext();
             return context.Set<TEntity>().SingleOrDefault(filter);
             // return context.Set<TEntity>().Where(filter).FirstOrDefault();
         }
-        public List<TEntity> GetList(Expression<Func<TEntity,bool>> filter = null)
+        public List<TEntity> GetList(Expression<Func<TEntity, bool>>? filter = null)
         {
             using var context = new TContext();
             return filter == null ? context.Set<TEntity>().ToList() : context.Set<TEntity>().Where(filter).ToList();

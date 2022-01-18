@@ -9,17 +9,18 @@ using EntityFrameworkCore.EncryptColumn.Interfaces;
 using EntityFrameworkCore.EncryptColumn.Util;
 using Microsoft.EntityFrameworkCore;
 using Saas.DataAccess.EntityFrameWorkCore.Models;
+using Saas.DataAccess.EntityFrameWorkCore.Models.UserClaims;
 
 namespace Saas.DataAccess.EntityFrameWorkCore.DbContexts;
 
 public class GordionDbContext :DbContext
 {
-    private readonly IEncryptionProvider _provider;
-    public GordionDbContext()
-    {
-        //Initialize.EncryptionKey = "cokAsiriGizliSifreFenaGizli";
-        //_provider = new GenerateEncryptionProvider();
-    }
+    //// private readonly IEncryptionProvider _provider;
+    //public GordionDbContext()
+    //{
+    //    //Initialize.EncryptionKey = "cokAsiriGizliSifreFenaGizli";
+    //    //_provider = new GenerateEncryptionProvider();
+    //}
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -66,4 +67,8 @@ public class GordionDbContext :DbContext
     public DbSet<Company> Company { get; set; }
 
     public DbSet<CompanyUser> CompanyUser { get; set; }
+    public DbSet<CompanyOperationClaim> CompanyOperationClaim { get; set; }
+
+    public DbSet<CompanyOperationUserClaim> CompanyOperationUserClaim { get; set; }
+
 }

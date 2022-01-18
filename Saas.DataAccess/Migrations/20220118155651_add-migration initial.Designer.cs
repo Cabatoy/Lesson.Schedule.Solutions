@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Saas.DataAccess.EntityFrameWorkCore.DbContexts;
 
@@ -11,9 +12,10 @@ using Saas.DataAccess.EntityFrameWorkCore.DbContexts;
 namespace Saas.DataAccess.Migrations
 {
     [DbContext(typeof(GordionDbContext))]
-    partial class GordionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220118155651_add-migration initial")]
+    partial class addmigrationinitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,46 +118,6 @@ namespace Saas.DataAccess.Migrations
                     b.ToTable("CompanyUser");
                 });
 
-            modelBuilder.Entity("Saas.DataAccess.EntityFrameWorkCore.Models.UserClaims.CompanyOperationClaim", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CompanyOperationClaim");
-                });
-
-            modelBuilder.Entity("Saas.DataAccess.EntityFrameWorkCore.Models.UserClaims.CompanyOperationUserClaim", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CompanyOperationClaimId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CompanyUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyOperationClaimId");
-
-                    b.HasIndex("CompanyUserId");
-
-                    b.ToTable("CompanyOperationUserClaim");
-                });
-
             modelBuilder.Entity("Saas.DataAccess.EntityFrameWorkCore.Models.CompanyUser", b =>
                 {
                     b.HasOne("Saas.DataAccess.EntityFrameWorkCore.Models.Company", "Company")
@@ -165,25 +127,6 @@ namespace Saas.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("Saas.DataAccess.EntityFrameWorkCore.Models.UserClaims.CompanyOperationUserClaim", b =>
-                {
-                    b.HasOne("Saas.DataAccess.EntityFrameWorkCore.Models.UserClaims.CompanyOperationClaim", "OperationClaim")
-                        .WithMany()
-                        .HasForeignKey("CompanyOperationClaimId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Saas.DataAccess.EntityFrameWorkCore.Models.CompanyUser", "CompanyUser")
-                        .WithMany()
-                        .HasForeignKey("CompanyUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CompanyUser");
-
-                    b.Navigation("OperationClaim");
                 });
 #pragma warning restore 612, 618
         }
