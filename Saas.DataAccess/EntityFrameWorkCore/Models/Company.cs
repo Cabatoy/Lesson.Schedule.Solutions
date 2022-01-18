@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EntityFrameworkCore.EncryptColumn.Attribute;
 using Microsoft.EntityFrameworkCore;
+using Saas.DataAccess.EntityFrameWorkCore.Generic;
 
 namespace Saas.DataAccess.EntityFrameWorkCore.Models
 {
