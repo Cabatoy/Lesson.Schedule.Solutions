@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Saas.DataAccess.EntityFrameWorkCore.Generic;
 
 namespace Saas.DataAccess.EntityFrameWorkCore.EfDal
 {
