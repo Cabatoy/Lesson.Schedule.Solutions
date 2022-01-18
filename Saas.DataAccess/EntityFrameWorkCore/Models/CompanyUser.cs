@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Saas.DataAccess.EntityFrameWorkCore.Models
 {
-    public class CompanyUser
+    public class CompanyUser :IEntity
     {
         public int Id { get; set; }
 
