@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Saas.DataAccess.EntityFrameWorkCore.Models
 {
     [Comment("FirmaBilgileri")]
-    public class Company
+    public class Company : IEntity
     {
         public int Id { get; set; }
 
