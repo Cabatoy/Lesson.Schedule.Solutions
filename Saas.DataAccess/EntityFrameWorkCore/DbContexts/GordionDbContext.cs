@@ -8,20 +8,12 @@ using EntityFrameworkCore.EncryptColumn.Extension;
 using EntityFrameworkCore.EncryptColumn.Interfaces;
 using EntityFrameworkCore.EncryptColumn.Util;
 using Microsoft.EntityFrameworkCore;
-using Saas.DataAccess.EntityFrameWorkCore.Models;
-using Saas.DataAccess.EntityFrameWorkCore.Models.UserClaims;
+using Saas.Entities.Models.UserClaims;
 
-namespace Saas.DataAccess.EntityFrameWorkCore.DbContexts;
+namespace Saas.Entities.Models;
 
 public class GordionDbContext :DbContext
 {
-    //// private readonly IEncryptionProvider _provider;
-    //public GordionDbContext()
-    //{
-    //    //Initialize.EncryptionKey = "cokAsiriGizliSifreFenaGizli";
-    //    //_provider = new GenerateEncryptionProvider();
-    //}
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         /*
@@ -43,32 +35,64 @@ public class GordionDbContext :DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         //fluentApi
+        #region Company
 
-        //modelBuilder.Entity<CompanyUser>()
-        //    .Property(b => b.PassWordHash)
-        //    .IsRequired();//required case
-        // .IsRequired(false)//optinal case
-        #region CompanyUser 
-        //modelBuilder.Entity<CompanyUser>()
-        //    .Property(b => b.PassWordHash)
-        //    .IsRequired();//required case
-        //modelBuilder.Entity<CompanyUser>()
-        //    .Property(b => b.PassWordSalt)
-        //    .IsRequired(); //required case;
+        //modelBuilder.Entity<Company>().Property(x => x.TaxNumber).HasMaxLength(11);
+        //modelBuilder.Entity<Company>().Property(x => x.Deleted).HasDefaultValue(0);
+
         #endregion
 
-        //modelBuilder.HasDefaultSchema("LessonSchedule");
-        //    modelBuilder.UseEncryption(this._provider);
-        //   base.OnModelCreating(modelBuilder);
+
+        #region CompanyUser 
+
+        ////modelBuilder.Entity<CompanyUser>().Property(x => x.CompanyId).IsRequired();
+        ////modelBuilder.Entity<CompanyUser>().Property(x => x.Email).IsRequired();
+        //modelBuilder.Entity<CompanyUser>().Property(x => x.PassWordHash).IsRequired();
+        //modelBuilder.Entity<CompanyUser>().Property(x => x.PassWordSalt).IsRequired();
+
+
+
+        //modelBuilder.Entity<CompanyUserBranches>().Property(x => x.IsAdmin).HasDefaultValue(0);
+        #endregion
+
+        #region CompanyBranch 
+
+        //modelBuilder.Entity<CompanyBranch>().Property(x => x.CompanyId).IsRequired();
+        //modelBuilder.Entity<CompanyBranch>().Property(x => x.Deleted).HasDefaultValue(0);
+        //modelBuilder.Entity<CompanyBranch>().Property(x => x.FullName).IsRequired();
+
+        #endregion
+
+
+        #region Roles
+
+        modelBuilder.Entity<CompanyOperationClaim>().Property(x => x.Name).IsRequired();
+
+        modelBuilder.Entity<CompanyOperationUserClaim>().Property(x => x.CompanyUserId).IsRequired();
+        modelBuilder.Entity<CompanyOperationUserClaim>().Property(x => x.CompanyOperationClaimId).IsRequired();
+
+       
+        #endregion
 
     }
 
+    #region Company-User-Branch
 
     public DbSet<Company> Company { get; set; }
 
     public DbSet<CompanyUser> CompanyUser { get; set; }
+
+    public DbSet<CompanyBranch> CompanyBranch { get; set; }
+
+    public DbSet<CompanyUserBranches> CompanyUserBranches { get; set; }
+
+    #endregion
+
+    #region Roles
+
     public DbSet<CompanyOperationClaim> CompanyOperationClaim { get; set; }
 
     public DbSet<CompanyOperationUserClaim> CompanyOperationUserClaim { get; set; }
 
+    #endregion
 }

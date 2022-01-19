@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Saas.DataAccess.EntityFrameWorkCore.Generic;
-using Saas.DataAccess.EntityFrameWorkCore.Models;
+using Saas.Entities.Generic;
+using Saas.Entities.Models;
 
 namespace Saas.DataAccess.EntityFrameWorkCore.IDal;
 
