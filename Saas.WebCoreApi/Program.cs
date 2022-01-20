@@ -7,12 +7,14 @@ using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Saas.Core.Security.Security.Encyption;
 using Saas.Core.Security.Security.Security.Jwt;
 using Saas.Entities.Models;
 using ServiceStack;
+using TokenOptions = Saas.Core.Security.Security.Security.Jwt.TokenOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
