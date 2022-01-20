@@ -1,16 +1,40 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+  </PropertyGroup>
+
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>f102aa54-edbd-42e8-bf3c-4d9082ef6a65</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <AssemblyVersion>1</AssemblyVersion>
+    <FileVersion>1</FileVersion>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>C:\Users\CahatayOzdemirCrmAka\Desktop\LessonSchedule\Lesson.Schedule.Solutions\Utility\Core\Saas.WebCoreApi.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Saas.Business.csproj" />
+    <ProjectReference Include="..\Saas.Entities\Saas.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Saas.WebCoreApi.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

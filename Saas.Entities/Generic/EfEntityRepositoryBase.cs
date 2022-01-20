@@ -12,10 +12,12 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
     {
         //unit of work kendisinde dahil
         using var context = new TContext();
-        //gonderilen entity i context e abone ettik.ister update ister delete ne yapacaksan 
-        var addedEntity = context.Entry(entity);
-        addedEntity.State = EntityState.Added;
-        context.SaveChanges();
+        var addedcontext = context.Entry(entity);
+        addedcontext.State = EntityState.Added;
+        var ss = context.SaveChanges();
+        //gonderilen entity i context e abone ettik.
+        //ister update ister delete ne yapacaksan 
+
     }
 
     public void Delete(TEntity entity)
