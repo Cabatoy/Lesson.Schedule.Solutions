@@ -15,6 +15,7 @@ namespace Saas.Entities.Models
     [Table("CompanyUserBranches",Schema = "Company")]
     public class CompanyUserBranches :IEntity
     {
+        [Key]
         public int Id { get; set; }
 
         [Display(Name = "Branch")]
@@ -22,7 +23,7 @@ namespace Saas.Entities.Models
         [ForeignKey("BranchId")]
         public virtual CompanyBranch Branch { get; set; }
 
-        [DefaultValue(0)]
+        [Required,DefaultValue(0)]
         public bool IsAdmin { get; set; }
     }
 }

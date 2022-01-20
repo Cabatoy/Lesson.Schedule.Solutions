@@ -14,7 +14,7 @@ namespace Saas.Entities.Models.UserClaims
     [Table("CompanyOperationClaim",Schema = "Roles")]
     public class CompanyOperationClaim :IEntity
     {
-     
+        [Key]
         public int Id { get; set; }
 
         [Required]

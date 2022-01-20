@@ -15,6 +15,7 @@ namespace Saas.Entities.Models
     [Table("CompanyBranch",Schema = "Company")]
     public class CompanyBranch :IEntity
     {
+        [Key]
         public int Id { get; set; }
 
         [Display(Name = "Company")]
@@ -25,10 +26,10 @@ namespace Saas.Entities.Models
         [Required]
         public string FullName { get; set; }
 
-        [DefaultValue(0)]
+        [Required, DefaultValue(0)]
         public bool Deleted { get; set; }
-        public string Description { get; set; }
-        public string DescriptionTwo { get; set; }
-        public string DescriptionThree { get; set; }
+        public string? Description { get; set; }
+        public string? DescriptionTwo { get; set; }
+        public string? DescriptionThree { get; set; }
     }
 }

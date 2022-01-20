@@ -15,26 +15,28 @@ namespace Saas.Entities.Models
     [Table("Company",Schema = "Company")]
     public class Company :IEntity
     {
+        [Key]
         public int Id { get; set; }
-      
+
         [Required]
         public string FullName { get; set; }
 
-        public string Adress { get; set; }
+        public string? Adress { get; set; }
 
 
         [Required, MaxLength(11)]
         public string TaxNumber { get; set; }
-        public string TaxOffice { get; set; }
-        public string PhoneNumberOne { get; set; }
-        public string PhoneNumberTwo { get; set; }
+        public string? TaxOffice { get; set; }
+        public string? PhoneNumberOne { get; set; }
+        public string? PhoneNumberTwo { get; set; }
 
-        [DefaultValue(0)]
+        [Required, DefaultValue(0)]
         public bool Deleted { get; set; }
 
-        public string Description { get; set; }
-        public string DescriptionTwo { get; set; }
-        public string DescriptionThree { get; set; }
+
+        public string? Description { get; set; }
+        public string? DescriptionTwo { get; set; }
+        public string? DescriptionThree { get; set; }
 
     }
 }

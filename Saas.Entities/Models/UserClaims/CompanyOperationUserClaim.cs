@@ -15,8 +15,8 @@ namespace Saas.Entities.Models.UserClaims
     [Table("CompanyOperationUserClaim",Schema = "Roles")]
     public class CompanyOperationUserClaim :IEntity
     {
-      
 
+        [Key]
         public int Id { get; set; }
 
         [Display(Name = "CompanyUser")]
@@ -25,12 +25,12 @@ namespace Saas.Entities.Models.UserClaims
         [ForeignKey("CompanyUserId")]
         public virtual CompanyUser CompanyUser { get; set; }
 
-      
+
         [Display(Name = "CompanyOperationClaim")]
         public virtual int CompanyOperationClaimId { get; set; }
-       
+
         [ForeignKey("CompanyOperationClaimId")]
         public virtual CompanyOperationClaim OperationClaim { get; set; }
-      
+
     }
 }

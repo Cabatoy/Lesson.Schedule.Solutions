@@ -16,6 +16,7 @@ public class GordionDbContext :DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        //optionsBuilder.UseSqlServer(connectionString: @"Server =.; Database =ScheduleProject ; User Id =sa ; Password =kutukola ; trusted_connection=true;");
         /*
          *Connection
            Asp.net
@@ -29,7 +30,7 @@ public class GordionDbContext :DbContext
          */
         optionsBuilder.UseSqlServer(
             connectionString:
-            @"Server =SQL5109.site4now.net; Database =db_a7f4a9_dbadmin ; User Id =db_a7f4a9_dbadmin_admin ; Password =kutukola2310 ;");
+            @"Server =SQL5109.site4now.net; Database =db_a7f4a9_dbadmin; User Id =db_a7f4a9_dbadmin_admin; Password =kutukola231090 ;");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,8 +38,9 @@ public class GordionDbContext :DbContext
         //fluentApi
         #region Company
 
-        //modelBuilder.Entity<Company>().Property(x => x.TaxNumber).HasMaxLength(11);
+        //modelBuilder.Entity<Company>().Property(x => x.TaxNumber).HasMaxLength(11).IsRequired();
         //modelBuilder.Entity<Company>().Property(x => x.Deleted).HasDefaultValue(0);
+        //modelBuilder.Entity<Company>().Property(x => x.FullName).IsRequired();
 
         #endregion
 
@@ -66,12 +68,12 @@ public class GordionDbContext :DbContext
 
         #region Roles
 
-        modelBuilder.Entity<CompanyOperationClaim>().Property(x => x.Name).IsRequired();
+        //modelBuilder.Entity<CompanyOperationClaim>().Property(x => x.Name).IsRequired();
 
-        modelBuilder.Entity<CompanyOperationUserClaim>().Property(x => x.CompanyUserId).IsRequired();
-        modelBuilder.Entity<CompanyOperationUserClaim>().Property(x => x.CompanyOperationClaimId).IsRequired();
+        //modelBuilder.Entity<CompanyOperationUserClaim>().Property(x => x.CompanyUserId).IsRequired();
+        //modelBuilder.Entity<CompanyOperationUserClaim>().Property(x => x.CompanyOperationClaimId).IsRequired();
 
-       
+
         #endregion
 
     }

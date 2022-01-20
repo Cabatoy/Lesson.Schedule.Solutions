@@ -1,7 +1,4 @@
-﻿
-
-using System.ComponentModel.DataAnnotations;
-using Core.Utilities.Results;
+﻿using Core.Utilities.Results;
 using FluentValidation;
 using ValidationException = FluentValidation.ValidationException;
 
