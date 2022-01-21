@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Business.Abstract;
-using Business.Constant;
-using Business.ValidationRules.FluentValidation;
-using Core.Aspect.Autfac.Transaction;
-using Core.Aspect.Autfac.Validation;
-using Core.Aspect.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
-using Core.Utilities.Business;
-using Core.Utilities.Results;
 using Microsoft.AspNetCore.Identity;
 using Saas.Business.Abstract;
-using Saas.Core.Security.Security.Hashing;
-using Saas.Core.Security.Security.Security.Jwt;
+using Saas.Business.Constants;
+using Saas.Business.ValidationRules.FluentValidation;
+using Saas.Core.Aspect.Autofac.Logging;
+using Saas.Core.Aspect.Autofac.Transaction;
+using Saas.Core.Aspect.Autofac.Validation;
+using Saas.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
+using Saas.Core.Security.Security.Hashıng;
+using Saas.Core.Security.Security.Jwt;
+using Saas.Core.Utilities.Business;
+using Saas.Core.Utilities.Results;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
 using Saas.Entities.Dto;
 using Saas.Entities.Models;
@@ -96,7 +95,7 @@ namespace Saas.Business.Concrete
 
         [ValidationAspect(typeof(AuthValidator),Priority = 1)]
         [LogAspect(typeof(DatabaseLogger))]
-        //    [TransactionScopeAspect]
+        [TransactionScopeAspect]
         public IResult RegisterForCompany(UserForRegisterDto dt)
         {
             IResult result = BusinessRules.Run(CheckCompanyTaxNumberExist(dt.TaxNumber));
@@ -111,31 +110,31 @@ namespace Saas.Business.Concrete
 
             _companyDal.Add(company);
 
-            //CompanyLocal loc = new CompanyLocal
-            //{
-            //    CompanyId = company.Id,
-            //    FullName = "Merkez",
-            //    Deleted = false
+            CompanyBranch loc = new CompanyBranch
+            {
+                CompanyId = company.Id,
+                FullName = "Merkez",
+                Deleted = false
 
-            //};
-            //_localDal.Add(loc);
+            };
+            _branchDal.Add(loc);
 
-            //dt.CompanyId = company.Id;
-            //dt.LocalId = loc.Id;
-            //if (string.IsNullOrWhiteSpace(dt.Password) || string.IsNullOrEmpty(dt.Password))
-            //    dt.Password = GenerateRandomPassword(new PasswordOptions()
-            //    {
-            //        RequireDigit = true,
-            //        RequireUppercase = true,
-            //        RequiredLength = 5
-            //    });
-            //Register(dt);
+            dt.CompanyId = company.Id;
+            dt.BranchId = loc.Id;
+            if (string.IsNullOrWhiteSpace(dt.Password) || string.IsNullOrEmpty(dt.Password))
+                dt.Password = GenerateRandomPassword(new PasswordOptions()
+                {
+                    RequireDigit = true,
+                    RequireUppercase = true,
+                    RequiredLength = 5
+                });
+            Register(dt);
 
-            //Login(new UserForLoginDto()
-            //{
-            //    Email = dt.Email,
-            //    Password = dt.Password
-            //});
+            Login(new UserForLoginDto()
+            {
+                Email = dt.Email,
+                Password = dt.Password
+            });
             return new DataResult<UserForRegisterDto>(message: Messages.CompanyAdded);
         }
 

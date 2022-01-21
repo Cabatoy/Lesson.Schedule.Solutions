@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Core.Utilities.IoC;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using Saas.Core.CrossCuttingConcerns.Caching;
+using Saas.Core.Utilities.IoC;
 
-namespace Core.CrossCuttingConcerns.Caching.Microsoft
+namespace Saas.Core.CrossCuttingConcerns.Caching.Microsoft
 {
-    public class MemoryCacheManager : ICacheManager
+    public class MemoryCacheManager :ICacheManager
     {
-        
+
         private readonly IMemoryCache _memoryCache;
         public MemoryCacheManager() : this(ServiceTool.ServiceProvider.GetService<IMemoryCache>())
         {
@@ -21,9 +22,9 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
         {
             _memoryCache = cache;
         }
-        public void Add(string key, object data, int duration)
+        public void Add(string key,object data,int duration)
         {
-            _memoryCache.Set(key, data, TimeSpan.FromMinutes(duration));
+            _memoryCache.Set(key,data,TimeSpan.FromMinutes(duration));
         }
 
         public T Get<T>(string key)
@@ -38,7 +39,7 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 
         public bool IsAdd(string key)
         {
-            return _memoryCache.TryGetValue(key, out _);//var yok kontrol
+            return _memoryCache.TryGetValue(key,out _);//var yok kontrol
         }
 
         public void Remove(string key)
@@ -48,7 +49,7 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 
         public void RemoveByPattern(string pattern)
         {
-            var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty("EntriesCollection", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty("EntriesCollection",System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
             var cacheEntriesCollection = cacheEntriesCollectionDefinition.GetValue(_memoryCache) as dynamic;
 
@@ -56,19 +57,19 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 
             foreach (var cacheItem in cacheEntriesCollection)
             {
-                ICacheEntry cacheItemValue = cacheItem.GetType().GetProperty("Value").GetValue(cacheItem, null);
+                ICacheEntry cacheItemValue = cacheItem.GetType().GetProperty("Value").GetValue(cacheItem,null);
                 cacheCollectionValues.Add(cacheItemValue);
             }
 
-            var regex = new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            var regex = new Regex(pattern,RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
             var keysToRemove = cacheCollectionValues.Where(d => regex.IsMatch(d.Key.ToString())).Select(d => d.Key).ToList();
 
-                //06.04.2021
+            //06.04.2021
             foreach (var key in keysToRemove)
             {
                 _memoryCache.Remove(key);
             }
-            
+
         }
     }
 }

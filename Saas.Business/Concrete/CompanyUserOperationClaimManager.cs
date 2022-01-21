@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Business.Abstract;
-using Business.Constant;
-using Core.Utilities.Results;
 using Saas.Business.Abstract;
+using Saas.Business.Constants;
+using Saas.Core.Utilities.Results;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
 using Saas.Entities.Models.UserClaims;
 
-namespace Business.Concrete
+namespace Saas.Business.Concrete
 {
     public class CompanyOperationUserClaimManager :ICompanyOperationUserClaimService
     {
@@ -35,12 +34,12 @@ namespace Business.Concrete
 
         public IDataResult<List<CompanyOperationUserClaim>> GetByRoleId(int operationClaimId)
         {
-            return new DataResult<List<CompanyOperationUserClaim>>(_UserOperationClaim.GetList(p => p.CompanyOperationClaimId == operationClaimId), true);
+            return new DataResult<List<CompanyOperationUserClaim>>(_UserOperationClaim.GetList(p => p.CompanyOperationClaimId == operationClaimId),true);
         }
 
         public IDataResult<List<CompanyOperationUserClaim>> GetList()
         {
-            return new DataResult<List<CompanyOperationUserClaim>>(_UserOperationClaim.GetList(), true);
+            return new DataResult<List<CompanyOperationUserClaim>>(_UserOperationClaim.GetList(),true);
         }
 
         public IResult Update(CompanyOperationUserClaim roles)

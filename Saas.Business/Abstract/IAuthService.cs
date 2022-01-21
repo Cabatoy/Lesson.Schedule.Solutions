@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Core.Utilities.Results;
-using Saas.Core.Security.Security.Security.Jwt;
-
+using Saas.Core.Security.Security.Jwt;
+using Saas.Core.Utilities.Results;
 using Saas.Entities.Dto;
 using Saas.Entities.Models;
 

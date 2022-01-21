@@ -12,8 +12,8 @@ using Saas.DataAccess.EntityFrameWorkCore.DbContexts;
 namespace Saas.DataAccess.Migrations
 {
     [DbContext(typeof(GordionDbContext))]
-    [Migration("20220120155043_initial")]
-    partial class initial
+    [Migration("20220121083604_21012022")]
+    partial class _21012022
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -176,6 +176,32 @@ namespace Saas.DataAccess.Migrations
                     b.ToTable("CompanyUserBranches", "Company");
 
                     b.HasComment("Kullanicinin Bağli oldugu Şubeler");
+                });
+
+            modelBuilder.Entity("Saas.Entities.Models.Logs", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Audit")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Detail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Log", "Problem");
+
+                    b.HasComment("Log Kayıtları");
                 });
 
             modelBuilder.Entity("Saas.Entities.Models.UserClaims.CompanyOperationClaim", b =>

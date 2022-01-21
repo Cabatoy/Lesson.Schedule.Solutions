@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
+using Saas.Core.Utilities.IoC;
 
-namespace Core.Extensions
+namespace Saas.Core.Extensions
 {
     public static class ServiceCollectionExtensions
     {
 
-        public static IServiceCollection AddDependencyResolvers(this IServiceCollection services, ICoreModule[] modules)
+        public static IServiceCollection AddDependencyResolvers(this IServiceCollection services,ICoreModule[] modules)
         {
             foreach (var module in modules)
             {

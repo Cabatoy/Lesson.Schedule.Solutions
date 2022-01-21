@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Business.Abstract;
-using Business.Constant;
-using Core.Aspect.Autfac.Transaction;
-using Core.Utilities.Results;
+using Saas.Business.Abstract;
+using Saas.Business.Constants;
+using Saas.Core.Utilities.Results;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
 using Saas.Entities.Models.UserClaims;
 
-namespace Business.Concrete
+namespace Saas.Business.Concrete
 {
-    public class OperationClaimManager : IOperationClaimService
+    public class OperationClaimManager :IOperationClaimService
     {
         private ICompanyOperationClaimDal _rolesDal;
 
@@ -41,7 +37,7 @@ namespace Business.Concrete
 
         public IDataResult<List<CompanyOperationClaim>> GetList()
         {
-            return new DataResult<List<CompanyOperationClaim>>(_rolesDal.GetList(), true);
+            return new DataResult<List<CompanyOperationClaim>>(_rolesDal.GetList(),true);
         }
 
         public IResult Update(CompanyOperationClaim roles)

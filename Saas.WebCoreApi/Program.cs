@@ -2,19 +2,18 @@ using System.Configuration;
 using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Business.DependencyResolvers.Autofac;
-using Core.DependencyResolvers;
-using Core.Extensions;
-using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Saas.Business.DependencyResolvers.Autofac;
+using Saas.Core.DependencyResolvers;
+using Saas.Core.Extensions;
 using Saas.Core.Security.Security.Encyption;
-using Saas.Core.Security.Security.Security.Jwt;
-using Saas.Entities.Models;
+using Saas.Core.Utilities.IoC;
+using Saas.DataAccess.EntityFrameWorkCore.DbContexts;
 using ServiceStack;
-using TokenOptions = Saas.Core.Security.Security.Security.Jwt.TokenOptions;
+using TokenOptions = Saas.Core.Security.Security.Jwt.TokenOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 

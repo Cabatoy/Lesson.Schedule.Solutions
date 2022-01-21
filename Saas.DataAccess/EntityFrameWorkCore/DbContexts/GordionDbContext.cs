@@ -8,9 +8,10 @@ using EntityFrameworkCore.EncryptColumn.Extension;
 using EntityFrameworkCore.EncryptColumn.Interfaces;
 using EntityFrameworkCore.EncryptColumn.Util;
 using Microsoft.EntityFrameworkCore;
+using Saas.Entities.Models;
 using Saas.Entities.Models.UserClaims;
 
-namespace Saas.Entities.Models;
+namespace Saas.DataAccess.EntityFrameWorkCore.DbContexts;
 
 public class GordionDbContext :DbContext
 {
@@ -20,10 +21,10 @@ public class GordionDbContext :DbContext
         /*
          *Connection
            Asp.net
-           "Data Source=SQL5109.site4now.net;Initial Catalog=db_a7f4a9_dbadmin;User Id=db_a7f4a9_dbadmin_admin;Password=kutukola2310"
+           "Data Source=SQL5109.site4now.net;Initial Catalog=db_a7f4a9_dbadmin;User Id=db_a7f4a9_dbadmin_admin;Password=kutukola231090"
             
            Klasik asp
-           "Provider=SQLOLEDB;Data Source=SQL5109.site4now.net;Initial Catalog=;User Id=db_a7f4a9_dbadmin_admin;Password=kutukola2310"
+           "Provider=SQLOLEDB;Data Source=SQL5109.site4now.net;Initial Catalog=;User Id=db_a7f4a9_dbadmin_admin;Password=kutukola231090"
 
 
         @"Server =.; Database =FirstStep ; User Id =sa ; Password =kutukola ; trusted_connection=true;"
@@ -97,4 +98,6 @@ public class GordionDbContext :DbContext
     public DbSet<CompanyOperationUserClaim> CompanyOperationUserClaim { get; set; }
 
     #endregion
+
+    public DbSet<Logs> Logs { get; set; }
 }

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
 using Castle.DynamicProxy;
-using Core.CrossCuttingConcerns.Validation;
-using Core.Utilities.Interceptors;
-using Core.Utilities.Messages;
 using FluentValidation;
+using Saas.Core.CrossCuttingConcerns.Validation;
+using Saas.Core.Utilities.Interceptors;
+using Saas.Core.Utilities.Messages;
 
-namespace Core.Aspect.Autfac.Validation
+namespace Saas.Core.Aspect.Autofac.Validation
 {
-    public class ValidationAspect : MethodInterception
+    public class ValidationAspect :MethodInterception
     {
         private readonly Type _validatorType;
         public ValidationAspect(Type validatorType)
@@ -27,7 +27,7 @@ namespace Core.Aspect.Autfac.Validation
             var entities = invocation.Arguments.Where(t => t.GetType() == entityType);
             foreach (var entity in entities)
             {
-                ValidationTool.Validate(validator, entity);
+                ValidationTool.Validate(validator,entity);
             }
         }
     }

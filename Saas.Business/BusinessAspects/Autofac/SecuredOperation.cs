@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Business.Constant;
 using Castle.DynamicProxy;
-using Core.Utilities.Interceptors;
-using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Saas.Business.Constants;
 using Saas.Core.Security.Security.Jwt;
+using Saas.Core.Utilities.Interceptors;
+using Saas.Core.Utilities.IoC;
 
 namespace Saas.Business.BusinessAspects.Autofac
 {

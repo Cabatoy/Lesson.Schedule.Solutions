@@ -1,6 +1,4 @@
-﻿
-
-namespace Business.Constant
+﻿namespace Saas.Business.Constants
 {
     public static class Messages
     {
@@ -49,13 +47,13 @@ namespace Business.Constant
         public static string CompanyTaxNumberExistError = "Firma Daha Önce Kayıt Edilmiştir.";
 
         public static string EmailCanNotBlank = "Mail Adresi Bos Birakilamaz";
-       
+
         internal static string rolesAdded = "Rol Eklendi.";
         public static string rolesDeleted = "Rol Silindi.";
         public static string rolesUpdated = "Rol Güncellendi.";
-        
 
-        public static string WareHouseUpdated ="Ambar Güncellendi";
+
+        public static string WareHouseUpdated = "Ambar Güncellendi";
         public static string WareHouseDeleted = "Ambar Silindi";
         public static string WareHouseAdded = "Ambar Eklendi";
 
@@ -63,16 +61,16 @@ namespace Business.Constant
         public static string WareHouseFloorDeleted = "Kat Silindi";
         public static string WareHouseFloorUpdated = "Kat Güncellendi";
 
-        public static string WareHouseShelfAdded   = "Raf Eklendi";
+        public static string WareHouseShelfAdded = "Raf Eklendi";
         public static string WareHouseShelfDeleted = "Raf Silindi";
         public static string WareHouseShelfUpdated = "Raf Güncellendi";
 
 
-        public static string WareHouseBenchAdded =   "Sıra Eklendi";
+        public static string WareHouseBenchAdded = "Sıra Eklendi";
         public static string WareHouseBenchDeleted = "Sıra Silindi";
         public static string WareHouseBenchUpdated = "Sıra Güncellendi";
 
-        public static string WareHouseCorridorAdded =   "Koridor Eklendi";
+        public static string WareHouseCorridorAdded = "Koridor Eklendi";
         public static string WareHouseCorridorDeleted = "Koridor Silindi";
         public static string WareHouseCorridorUpdated = "Koridor Güncellendi";
     }

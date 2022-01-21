@@ -1,26 +1,22 @@
 ﻿using System;
-using Business.Abstract;
-using Business.Constant;
-using Core.Utilities.Results;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Business.ValidationRules.FluentValidation;
-using Core.Aspect.Autfac.Transaction;
-using Core.Aspect.Autfac.Validation;
-using Core.Aspect.Autofac.Caching;
-using Core.Aspect.Autofac.Logging;
-using Core.Aspect.Autofac.Performance;
-using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
-using Core.Utilities.Business;
-using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
 using Saas.Business.Abstract;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
 using Saas.Entities.Models;
+using Saas.Core.CrossCuttingConcerns.Caching;
+using Saas.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
+using Saas.Business.ValidationRules.FluentValidation;
+using Saas.Core.Utilities.Business;
+using Saas.Business.Constants;
+using Saas.Core.Aspect.Autofac.Caching;
+using Saas.Core.Aspect.Autofac.Logging;
+using Saas.Core.Aspect.Autofac.Performance;
+using Saas.Core.Aspect.Autofac.Validation;
+using Saas.Core.Utilities.Results;
 
-
-namespace Business.Concrete
+namespace Saas.Business.Concrete
 {
 
     public class CompanyManager :ICompanyService

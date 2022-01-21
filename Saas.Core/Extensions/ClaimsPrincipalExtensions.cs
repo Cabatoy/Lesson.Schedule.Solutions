@@ -5,11 +5,11 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Extensions
+namespace Saas.Core.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {
-        public static List<string> Claims(this ClaimsPrincipal claimsPrincipal , string claimType)
+        public static List<string> Claims(this ClaimsPrincipal claimsPrincipal,string claimType)
         {
             var result = claimsPrincipal.FindAll(claimType)?.Select(x => x.Value).ToList();
             return result;
