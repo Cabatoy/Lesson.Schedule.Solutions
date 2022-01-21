@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
-using Core.CrossCuttingConcerns.Logging;
-using Core.CrossCuttingConcerns.Logging.Log4Net;
-using Core.Utilities.Interceptors;
-using Core.Utilities.IoC;
-using Core.Utilities.Messages;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Saas.Core.CrossCuttingConcerns.Logging;
+using Saas.Core.CrossCuttingConcerns.Logging.Log4Net;
+using Saas.Core.Utilities.Interceptors;
+using Saas.Core.Utilities.IoC;
+using Saas.Core.Utilities.Messages;
 
-namespace Core.Aspect.Autofac.Logging
+namespace Saas.Core.Aspect.Autofac.Logging
 {
-    public class LogAspect : MethodInterception
+    public class LogAspect :MethodInterception
     {
         private LoggerServiceBase _loggerServiceBase;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -57,7 +57,7 @@ namespace Core.Aspect.Autofac.Logging
             {
                 MethodName = invocation.Method.Name,
                 LogParameters = logParameters,
-                User = (_httpContextAccessor.HttpContext == null | _httpContextAccessor?.HttpContext?.User?.Identity?.Name == null) ? "?" : _httpContextAccessor.HttpContext.User.Identity.Name
+                User = _httpContextAccessor.HttpContext == null | _httpContextAccessor?.HttpContext?.User?.Identity?.Name == null ? "?" : _httpContextAccessor.HttpContext.User.Identity.Name
 
             };
             return logDetail;

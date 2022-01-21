@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Core.Utilities.IoC
+namespace Saas.Core.Utilities.IoC
 {
     public static class ServiceTool
     {

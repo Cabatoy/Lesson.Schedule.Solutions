@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Utilities.Results;
+using Saas.Core.Utilities.Results;
 using Saas.Entities.Models.UserClaims;
 
 namespace Saas.Business.Abstract

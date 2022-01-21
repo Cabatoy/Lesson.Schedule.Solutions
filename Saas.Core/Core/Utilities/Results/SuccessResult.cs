@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Utilities.Results
+namespace Saas.Core.Utilities.Results
 {
-    public class SuccessResult:Result
+    public class SuccessResult :Result
     {
 
-        public SuccessResult(string message) : base(success: true, message)
-        { 
-        
+        public SuccessResult(string message) : base(success: true,message)
+        {
+
         }
         public SuccessResult() : base(success: true)
         {

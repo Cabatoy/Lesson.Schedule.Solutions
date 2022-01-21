@@ -1,16 +1,17 @@
 ﻿using ServiceStack.Redis;
 using System;
-using Core.Extensions;
-using Core.Utilities.IoC;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using Saas.Core.CrossCuttingConcerns.Caching;
+using Saas.Core.Utilities.IoC;
+using Saas.Core.Extensions;
 
-namespace Core.CrossCuttingConcerns.Caching.Redis
+namespace Saas.Core.CrossCuttingConcerns.Caching.Redis
 {
     /// <summary>
     /// RedisCacheManager
     /// </summary>
-    public class RedisCacheManager : ICacheManager
+    public class RedisCacheManager :ICacheManager
     {
         private readonly RedisEndpoint _redisEndpoint;
         private readonly IMemoryCache _memoryCache;
@@ -27,7 +28,7 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
         public RedisCacheManager(IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
-            _redisEndpoint = new RedisEndpoint("localhost", 6379);
+            _redisEndpoint = new RedisEndpoint("localhost",6379);
         }
 
         public T Get<T>(string key)
@@ -44,14 +45,14 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
             return result.ToJson();
         }
 
-        public void Add(string key, object data, int duration)
+        public void Add(string key,object data,int duration)
         {
-            RedisInvoker(x => x.Add(key, data, TimeSpan.FromMinutes(duration)));
+            RedisInvoker(x => x.Add(key,data,TimeSpan.FromMinutes(duration)));
         }
 
-        public void Add(string key, object data)
+        public void Add(string key,object data)
         {
-            RedisInvoker(x => x.Add(key, data));
+            RedisInvoker(x => x.Add(key,data));
         }
 
         public bool IsAdd(string key)

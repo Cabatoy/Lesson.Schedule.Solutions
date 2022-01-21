@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Utilities.Messages
+namespace Saas.Core.Utilities.Messages
 {
     public class AspectMessages
     {

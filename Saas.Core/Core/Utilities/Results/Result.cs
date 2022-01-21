@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Utilities.Results
+namespace Saas.Core.Utilities.Results
 {
-    public class Result : IResult
+    public class Result :IResult
     {
         //this ile cagrialn constracter diger tek parametre alan methodu da build eder
-        public Result(bool success, string message) : this(success)
+        public Result(bool success,string message) : this(success)
         {
             Message = message;
             //Success=success;

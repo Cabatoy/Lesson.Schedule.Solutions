@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Core.Extensions
+namespace Saas.Core.Extensions
 {
     //TODO: Herhangi bir objeyi json stringine çevirir.
     public static class ObjectExtensions
@@ -16,5 +16,5 @@ namespace Core.Extensions
         }
     }
 
-    
+
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 
-namespace Core.Extensions
+namespace Saas.Core.Extensions
 {
     public class ExceptionMiddleware
     {
@@ -26,13 +26,13 @@ namespace Core.Extensions
             }
             catch (Exception e)
             {
-                await HandleExceptionAsync(httpContext, e);
+                await HandleExceptionAsync(httpContext,e);
             }
 
 
         }
 
-        private static Task HandleExceptionAsync(HttpContext httpContext, Exception e)
+        private static Task HandleExceptionAsync(HttpContext httpContext,Exception e)
         {
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

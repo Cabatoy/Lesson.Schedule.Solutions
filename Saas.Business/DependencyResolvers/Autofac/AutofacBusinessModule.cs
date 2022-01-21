@@ -5,17 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extras.DynamicProxy;
-using Business.Abstract;
-using Business.Concrete;
 using Castle.DynamicProxy;
-using Core.Utilities.Interceptors;
 using Saas.Business.Abstract;
 using Saas.Business.Concrete;
-using Saas.Core.Security.Security.Security.Jwt;
+using Saas.Core.Security.Security.Jwt;
+using Saas.Core.Utilities.Interceptors;
 using Saas.DataAccess.EntityFrameWorkCore.EfDal;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
 
-namespace Business.DependencyResolvers.Autofac
+namespace Saas.Business.DependencyResolvers.Autofac
 {
     public class AutofacBusinessModule :Module
     {

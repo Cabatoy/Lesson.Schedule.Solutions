@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
-using Core.Utilities.Interceptors;
-using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
+using Saas.Core.Utilities.Interceptors;
+using Saas.Core.Utilities.IoC;
 
-namespace Core.Aspect.Autofac.Performance
+namespace Saas.Core.Aspect.Autofac.Performance
 {
-    public class PerformanceAspect : MethodInterception
+    public class PerformanceAspect :MethodInterception
     {
         private int _interval;
         private Stopwatch _stopwatch;

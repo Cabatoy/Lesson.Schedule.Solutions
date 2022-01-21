@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Saas.Entities.Models;
+using Saas.DataAccess.EntityFrameWorkCore.DbContexts;
 
 #nullable disable
 
@@ -174,6 +174,32 @@ namespace Saas.DataAccess.Migrations
                     b.ToTable("CompanyUserBranches", "Company");
 
                     b.HasComment("Kullanicinin Bağli oldugu Şubeler");
+                });
+
+            modelBuilder.Entity("Saas.Entities.Models.Logs", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Audit")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Detail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Log", "Problem");
+
+                    b.HasComment("Log Kayıtları");
                 });
 
             modelBuilder.Entity("Saas.Entities.Models.UserClaims.CompanyOperationClaim", b =>

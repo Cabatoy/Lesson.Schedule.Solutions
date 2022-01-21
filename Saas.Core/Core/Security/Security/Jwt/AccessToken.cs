@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Saas.Core.Security.Security.Security.Jwt
+namespace Saas.Core.Security.Security.Jwt
 {
     public class AccessToken
     {

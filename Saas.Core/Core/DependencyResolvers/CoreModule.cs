@@ -1,12 +1,11 @@
 ﻿using System.Diagnostics;
-using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Caching.Microsoft;
-using Core.CrossCuttingConcerns.Caching.Redis;
-using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Saas.Core.CrossCuttingConcerns.Caching;
+using Saas.Core.CrossCuttingConcerns.Caching.Microsoft;
+using Saas.Core.Utilities.IoC;
 
-namespace Core.DependencyResolvers
+namespace Saas.Core.DependencyResolvers
 {
     public class CoreModule :ICoreModule
     {

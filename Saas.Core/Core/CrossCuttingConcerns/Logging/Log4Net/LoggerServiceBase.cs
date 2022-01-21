@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Castle.Core.Logging;
-using Core.Extensions;
 using log4net;
 using log4net.Repository;
 using log4net.Util;
+using Saas.Core.CrossCuttingConcerns.Logging;
 
 
-namespace Core.CrossCuttingConcerns.Logging.Log4Net
+namespace Saas.Core.CrossCuttingConcerns.Logging.Log4Net
 {
     public class LoggerServiceBase
     {
@@ -22,9 +22,9 @@ namespace Core.CrossCuttingConcerns.Logging.Log4Net
         {
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(File.OpenRead("log4net.config"));
-            ILoggerRepository logggeRepository = LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
-            log4net.Config.XmlConfigurator.Configure(logggeRepository, xmlDocument["log4net"]);
-            _log = LogManager.GetLogger(logggeRepository.Name, name);
+            ILoggerRepository logggeRepository = LogManager.CreateRepository(Assembly.GetEntryAssembly(),typeof(log4net.Repository.Hierarchy.Hierarchy));
+            log4net.Config.XmlConfigurator.Configure(logggeRepository,xmlDocument["log4net"]);
+            _log = LogManager.GetLogger(logggeRepository.Name,name);
         }
 
         public bool IsInfoEnabled => _log.IsInfoEnabled;

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Utilities.Results;
+using Saas.Core.Utilities.Results;
 
-namespace Core.Utilities.Business
+namespace Saas.Core.Utilities.Business
 {
     public class BusinessRules
     {

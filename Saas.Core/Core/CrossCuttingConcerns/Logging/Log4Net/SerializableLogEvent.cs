@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using log4net.Core;
 
-namespace Core.CrossCuttingConcerns.Logging.Log4Net
+namespace Saas.Core.CrossCuttingConcerns.Logging.Log4Net
 {
     [Serializable]
     public class SerializableLogEvent

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
-using Core.CrossCuttingConcerns.Caching;
-using Core.Utilities.Interceptors;
-using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
+using Saas.Core.CrossCuttingConcerns.Caching;
+using Saas.Core.Utilities.Interceptors;
+using Saas.Core.Utilities.IoC;
 
-namespace Core.Aspect.Autofac.Caching
+namespace Saas.Core.Aspect.Autofac.Caching
 {
-    public class CasheRemoveAspect : MethodInterception
+    public class CasheRemoveAspect :MethodInterception
     {
         private string _pattern;
         private ICacheManager _cacheManager;

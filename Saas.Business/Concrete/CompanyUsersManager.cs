@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Business.Abstract;
-using Business.Constant;
-using Core.Utilities.Results;
+﻿using System.Collections.Generic;
 using Saas.Business.Abstract;
+using Saas.Business.Constants;
+using Saas.Core.Utilities.Results;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
 using Saas.Entities.Models;
 using Saas.Entities.Models.UserClaims;
 
-namespace Business.Concrete
+namespace Saas.Business.Concrete
 {
-    public class CompanyUsersManager : ICompanyUserService
+    public class CompanyUsersManager :ICompanyUserService
     {
         private readonly ICompanyUserDal _userDal;
 
@@ -35,7 +30,7 @@ namespace Business.Concrete
 
         public IDataResult<CompanyUser> GetUserById(int userId)
         {
-            return new DataResult<CompanyUser>(_userDal.Get(p => p.Id == userId), true);
+            return new DataResult<CompanyUser>(_userDal.Get(p => p.Id == userId),true);
         }
 
         public CompanyUser GetByMail(string mail)
@@ -50,7 +45,7 @@ namespace Business.Concrete
 
         public IDataResult<List<CompanyUser>> GetUserList()
         {
-            return new DataResult<List<CompanyUser>>(_userDal.GetList(), true);
+            return new DataResult<List<CompanyUser>>(_userDal.GetList(),true);
         }
 
         public IResult Update(CompanyUser user)

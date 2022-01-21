@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
-using Core.CrossCuttingConcerns.Logging;
-using Core.CrossCuttingConcerns.Logging.Log4Net;
-using Core.Utilities.Interceptors;
-using Core.Utilities.Messages;
+using Saas.Core.CrossCuttingConcerns.Logging;
+using Saas.Core.CrossCuttingConcerns.Logging.Log4Net;
+using Saas.Core.Utilities.Interceptors;
+using Saas.Core.Utilities.Messages;
 
-namespace Core.Aspect.Autofac.Exception
+namespace Saas.Core.Aspect.Autofac.Exception
 {
-    public class ExceptionLogAspect : MethodInterception
+    public class ExceptionLogAspect :MethodInterception
     {
         private readonly LoggerServiceBase _loggerServiceBase;
 
@@ -24,7 +24,7 @@ namespace Core.Aspect.Autofac.Exception
 
             _loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(loggerService);
         }
-        protected override void OnException(IInvocation invocation, System.Exception e)
+        protected override void OnException(IInvocation invocation,System.Exception e)
         {
             LogDetailWithException logDetailWithException = GetLogDetail(invocation);
             logDetailWithException.ExceptionMessage = e.Message;
@@ -48,8 +48,8 @@ namespace Core.Aspect.Autofac.Exception
             {
                 MethodName = invocation.Method.Name,
                 LogParameters = logparameters
-                
-                
+
+
             };
             return logDetailWithException;
         }

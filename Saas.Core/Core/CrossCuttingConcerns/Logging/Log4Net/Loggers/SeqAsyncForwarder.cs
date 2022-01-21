@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.CrossCuttingConcerns.Logging.Log4Net.Loggers
+namespace Saas.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers
 {
-    public class SeqAsyncForwarder : LoggerServiceBase
+    public class SeqAsyncForwarder :LoggerServiceBase
     {
         public SeqAsyncForwarder() : base("SeqAsyncForwarder")
         {

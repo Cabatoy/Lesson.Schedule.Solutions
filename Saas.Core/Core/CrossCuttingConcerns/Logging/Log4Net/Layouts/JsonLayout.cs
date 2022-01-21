@@ -8,7 +8,7 @@ using log4net.Core;
 using log4net.Layout;
 using Newtonsoft.Json;
 
-namespace Core.CrossCuttingConcerns.Logging.Log4Net.Layouts
+namespace Saas.Core.CrossCuttingConcerns.Logging.Log4Net.Layouts
 {
     public class JsonLayout : LayoutSkeleton
     {

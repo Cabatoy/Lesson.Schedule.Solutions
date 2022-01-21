@@ -1,9 +1,9 @@
 ﻿using System;
 using Castle.DynamicProxy;
 
-namespace Core.Utilities.Interceptors
+namespace Saas.Core.Utilities.Interceptors
 {
-    public abstract class MethodInterception : MethodInterceptionBaseAttiribute
+    public abstract class MethodInterception :MethodInterceptionBaseAttiribute
     {
 
         protected virtual void OnBefore(IInvocation invocation)
