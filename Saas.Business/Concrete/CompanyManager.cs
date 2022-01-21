@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Saas.Business.Abstract;
-using Saas.DataAccess.EntityFrameWorkCore.IDal;
 using Saas.Entities.Models;
 using Saas.Core.CrossCuttingConcerns.Caching;
 using Saas.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
@@ -15,6 +14,7 @@ using Saas.Core.Aspect.Autofac.Logging;
 using Saas.Core.Aspect.Autofac.Performance;
 using Saas.Core.Aspect.Autofac.Validation;
 using Saas.Core.Utilities.Results;
+using Saas.DataAccess.EntityFrameWorkCore.IDal;
 
 namespace Saas.Business.Concrete
 {
