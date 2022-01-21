@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Saas.Entities\Saas.Entities.csproj" />
+    <ProjectReference Include="..\Saas.Entities\Saas.Entities.csproj" />
   </ItemGroup>
 
 </Project>
