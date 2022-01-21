@@ -69,6 +69,7 @@ namespace Saas.WebCoreApi.Controllers
                 }
                 return BadRequest(result.Message);
             }
+            //test
             return BadRequest(registerResult.Message);
         }
 
