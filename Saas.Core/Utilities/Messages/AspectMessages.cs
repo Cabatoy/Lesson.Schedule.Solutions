@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Saas.Core.Utilities.Messages
 {
-    public class AspectMessages
+    public static class AspectMessages
     {
 
         public static string WrongValidatonType = "Hatali Validation Tipi";

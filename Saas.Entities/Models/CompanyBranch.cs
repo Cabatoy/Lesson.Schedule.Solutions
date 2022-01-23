@@ -15,16 +15,19 @@ namespace Saas.Entities.Models
     [Table("CompanyBranch",Schema = "Company")]
     public class CompanyBranch :IEntity
     {
+        private Company company;
+        private String fullName;
+
         [Key]
         public int Id { get; set; }
 
         [Display(Name = "Company")]
         public virtual int CompanyId { get; set; }
         [ForeignKey("CompanyId")]
-        public virtual Company Company { get; set; }
+        public virtual Company Company { get => company; set => company = value; }
 
         [Required]
-        public string FullName { get; set; }
+        public string FullName { get => fullName; set => fullName = value; }
 
         [Required, DefaultValue(0)]
         public bool Deleted { get; set; }

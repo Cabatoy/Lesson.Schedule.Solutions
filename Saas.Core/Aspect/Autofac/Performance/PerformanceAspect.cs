@@ -13,8 +13,8 @@ namespace Saas.Core.Aspect.Autofac.Performance
 {
     public class PerformanceAspect :MethodInterception
     {
-        private int _interval;
-        private Stopwatch _stopwatch;
+        private readonly int _interval;
+        private readonly Stopwatch _stopwatch;
 
         public PerformanceAspect(int interval)
         {
@@ -33,7 +33,9 @@ namespace Saas.Core.Aspect.Autofac.Performance
             if (_stopwatch.Elapsed.TotalSeconds > _interval)
             {
                 //buraya mail ekleriz belirtilen sureyi aşarsa bıze mail döner
-                Debug.WriteLine($"Performance: {invocation.Method.DeclaringType.FullName}.{invocation.Method.Name}--->{_stopwatch.Elapsed.TotalSeconds}");
+                if (invocation.Method.DeclaringType != null)
+                    Debug.WriteLine(
+                        $"Performance: {invocation.Method.DeclaringType.FullName}.{invocation.Method.Name}--->{_stopwatch.Elapsed.TotalSeconds}");
             }
             _stopwatch.Reset();
         }

@@ -17,15 +17,15 @@
             <param name="user"></param>
             <returns></returns>
         </member>
-        <member name="M:Saas.WebCoreApi.Controllers.AuthController.Register(Saas.Entities.Dto.UserForRegisterDto)">
+        <member name="M:Saas.WebCoreApi.Controllers.AuthController.Register(Saas.Entities.Dto.CompanyFirstRegisterDto)">
             <summary>
             firmaya ait kullanıcı oluşturmak için kullanılır, firma ve local ıd dolu gönderilmeli
             manager kısmında kullanıcı daha önce mail adresiyle kayıt yapılmış mıdır diye kontrol edilir
             </summary>
-            <param name="userForRegisterDto"></param>
+            <param name="CompanyFirstRegisterDto"></param>
             <returns></returns>
         </member>
-        <member name="M:Saas.WebCoreApi.Controllers.AuthController.RegisterForCompany(Saas.Entities.Dto.UserForRegisterDto)">
+        <member name="M:Saas.WebCoreApi.Controllers.AuthController.CompanyFirstRegister(Saas.Entities.Dto.CompanyFirstRegisterDto)">
             <summary>
             ilk firma kaydı için kullanılır.
             companyid ve local id bos olur.kayit işleminden sonra dolar.

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Saas.Business.Abstract;
 using Saas.Entities.Models;
-using Saas.Core.CrossCuttingConcerns.Caching;
 using Saas.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Saas.Business.ValidationRules.FluentValidation;
 using Saas.Core.Utilities.Business;
@@ -24,13 +23,9 @@ namespace Saas.Business.Concrete
         private readonly ICompanyDal _companyDal;
 
 
-        private readonly ICacheManager _cacheManager;
-
-        public CompanyManager(ICompanyDal companyDal,ICacheManager cacheManager)
+        public CompanyManager(ICompanyDal companyDal)
         {
             _companyDal = companyDal;
-            _cacheManager = cacheManager;
-
         }
 
         [ValidationAspect(typeof(CompanyValidator),Priority = 1)] //add methoduna girmeden araya girip once kontrol saglar
@@ -45,43 +40,43 @@ namespace Saas.Business.Concrete
             return new DataResult<Company>(Messages.CompanyAdded);
         }
 
-        private async Task<IResult> CheckCompanyTaxNumberExist(string companyTaxNumber)
+        private Task<IResult> CheckCompanyTaxNumberExist(string companyTaxNumber)
         {
             if (_companyDal.GetList(p => p.TaxNumber == companyTaxNumber).Count != 0)
             {
-                return new ErrorResult(message: Messages.CompanyTaxNumberExistError);
+                return Task.FromResult<IResult>(new ErrorResult(message: Messages.CompanyTaxNumberExistError));
             }
-            return new SuccessResult();
+            return Task.FromResult<IResult>(new SuccessResult());
         }
 
         [LogAspect(typeof(DatabaseLogger))]
-        public async Task<IResult> Delete(Company company)
+        public Task<IResult> Delete(Company company)
         {
             _companyDal.Delete(company);
 
-            return new DataResult<Company>(message: Messages.CompanyDeleted);
+            return Task.FromResult<IResult>(new DataResult<Company>(message: Messages.CompanyDeleted));
         }
 
 
         [LogAspect(typeof(DatabaseLogger))]
-        public async Task<IResult> Update(Company company)
+        public Task<IResult> Update(Company company)
         {
             _companyDal.Update(company);
 
-            return new DataResult<Company>(Messages.CompanyUpdated);
+            return Task.FromResult<IResult>(new DataResult<Company>(Messages.CompanyUpdated));
         }
 
         [CacheAspect(duration: 10)]  //10 dakika boyunca cache te sonra db den tekrar cache e seklinde bir dongu
         [LogAspect(typeof(DatabaseLogger))]
         [PerformanceAspect(interval: 5)]
-        public async Task<IDataResult<List<Company>>> GetCompanyList()
+        public Task<IDataResult<List<Company>>> GetCompanyList()
         {
-            return new DataResult<List<Company>>(_companyDal.GetList(),true);
+            return Task.FromResult<IDataResult<List<Company>>>(new DataResult<List<Company>>(_companyDal.GetList(),true));
         }
         [LogAspect(typeof(DatabaseLogger))]
-        public async Task<IDataResult<Company>> GetCompanyById(int CompanyId)
+        public Task<IDataResult<Company>> GetCompanyById(int companyId)
         {
-            return new DataResult<Company>(_companyDal.Get(filter: p => p.Id == CompanyId),true);
+            return Task.FromResult<IDataResult<Company>>(new DataResult<Company>(_companyDal.Get(filter: p => p.Id == companyId),true));
         }
     }
 }

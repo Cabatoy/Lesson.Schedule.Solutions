@@ -4,24 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Saas.Entities.Generic;
+using Saas.Entities.Models;
 
 namespace Saas.Entities.Dto
 {
-    public class UserForRegisterDto :IDto, IEntity
+    public class CompanyFirstRegisterDto :IDto, IEntity
     {
         public int CompanyId { get; set; }
-        public int BranchId { get; set; }
+        public List<int> UserBranchesList { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string FullName { get; set; }
         public string CompanyName { get; set; }
         public string TaxNumber { get; set; }
         public string Adress { get; set; }
+        public bool IsStudent { get; set; }
+        public bool SysAdmin { get; set; }
+        public bool BranchAdmin { get; set; }
 
-        public UserForRegisterDto()
+        public CompanyFirstRegisterDto()
         {
             CompanyId = 0;
-            BranchId = 0;
+            UserBranchesList = new List<int>();
         }
     }
 }

@@ -15,17 +15,20 @@ namespace Saas.Entities.Models
     [Table("Company",Schema = "Company")]
     public class Company :IEntity
     {
+        private String fullName;
+        private String taxNumber;
+
         [Key]
         public int Id { get; set; }
 
         [Required]
-        public string FullName { get; set; }
+        public string FullName { get => fullName; init => fullName = value; }
 
         public string? Adress { get; set; }
 
 
         [Required, MaxLength(11)]
-        public string TaxNumber { get; set; }
+        public string TaxNumber { get => taxNumber; init => taxNumber = value; }
         public string? TaxOffice { get; set; }
         public string? PhoneNumberOne { get; set; }
         public string? PhoneNumberTwo { get; set; }

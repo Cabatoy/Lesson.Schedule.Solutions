@@ -28,23 +28,26 @@ namespace Saas.Core.Aspect.Autofac.Caching
         {
             var methodName = string.Format($"{invocation?.Method?.ReflectedType?.FullName}.{invocation?.Method?.Name}");
             var argument = invocation?.Arguments.ToList();
-            var key = $"{methodName}({string.Join(",",argument.Select(x => x?.ToString() ?? "<Null>"))})";
-            if (_cacheManager.IsAdd(key))
+            if (argument != null)
             {
-                //invocation.ReturnValue = _cacheManager.Get(key);
-                //return;
+                var key = $"{methodName}({string.Join(",",argument.Select(x => x?.ToString() ?? "<Null>"))})";
+                if (_cacheManager.IsAdd(key))
+                {
+                    //invocation.ReturnValue = _cacheManager.Get(key);
+                    //return;
+                    if (invocation != null)
+                    {
+                        invocation.ReturnValue = _cacheManager.Get(key);
+                        return;
+                    }
+                }
+                //invocation.Proceed();
+                //_cacheManager.Add(key, invocation.ReturnValue, _duration);
                 if (invocation != null)
                 {
-                    invocation.ReturnValue = _cacheManager.Get(key);
-                    return;
+                    invocation.Proceed();
+                    _cacheManager.Add(key,invocation.ReturnValue,_duration);
                 }
-            }
-            //invocation.Proceed();
-            //_cacheManager.Add(key, invocation.ReturnValue, _duration);
-            if (invocation != null)
-            {
-                invocation.Proceed();
-                _cacheManager.Add(key,invocation.ReturnValue,_duration);
             }
         }
 

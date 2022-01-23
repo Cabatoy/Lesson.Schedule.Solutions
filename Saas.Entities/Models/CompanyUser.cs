@@ -15,6 +15,13 @@ namespace Saas.Entities.Models
     [Table("CompanyUser",Schema = "Company")]
     public class CompanyUser :IEntity
     {
+        private Company company;
+        private String fullName;
+        private String email;
+        private Byte[] passWordHash;
+        private Byte[] passWordSalt;
+        private List<CompanyUserBranches> userBranches;
+
         [Key]
         public int Id { get; set; }
 
@@ -22,28 +29,40 @@ namespace Saas.Entities.Models
         public virtual int CompanyId { get; set; }
 
         [ForeignKey("CompanyId")]
-        public virtual Company Company { get; set; }
+        public virtual Company Company { get => company; set => company = value; }
+
+
+        //[Display(Name = "Branch")]
+        //public virtual int? BranchId { get; set; }
+
+        //[ForeignKey("BranchId")]
+        //public virtual CompanyBranch Branch { get; set; }
 
 
         [Required]
-        public string FullName { get; set; }
+        public string FullName { get => fullName; init => fullName = value; }
 
         [Required]
-        public string Email { get; set; }
+        public string Email { get => email; init => email = value; }
 
         [Required]
-        public byte[] PassWordSalt { get; set; }
-      
-        [Required]
-        public byte[] PassWordHash { get; set; }
+        public byte[] PassWordSalt { get => passWordSalt; init => passWordSalt = value; }
 
-        [Required, DefaultValue(0),Comment("Company Admin")]
+        [Required]
+        public byte[] PassWordHash { get => passWordHash; init => passWordHash = value; }
+
+        [Required, DefaultValue(0), Comment("IsStudent? Yes-No")]
+        public bool IsStudent { get; set; }
+
+        [Required, DefaultValue(0), Comment("Company Admin")]
         public bool SysAdmin { get; set; }
 
-        [Required, DefaultValue(0),Comment("Branch Admin")]
-        public bool BranchAdmin { get; set; }
+        [Required, DefaultValue(0), Comment("Branch Admin")]
+        public bool BranchAdmin { get; init; }
 
         [Required, DefaultValue(0)]
         public bool Deleted { get; set; }
+
+        public virtual List<CompanyUserBranches> UserBranches { get => userBranches; set => userBranches = value; }
     }
 }

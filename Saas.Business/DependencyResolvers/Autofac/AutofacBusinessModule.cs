@@ -24,7 +24,7 @@ namespace Saas.Business.DependencyResolvers.Autofac
             builder.RegisterType<CompanyManager>().As<ICompanyService>();
             builder.RegisterType<EfCompanyDal>().As<ICompanyDal>();
 
-            //      builder.RegisterType<CompanyBranchManager>().As<ICompanyBranchService>();
+            builder.RegisterType<CompanyBranchesManager>().As<ICompanyBranchesService>();
             builder.RegisterType<EfCompanyBranchDal>().As<ICompanyBranchDal>();
 
             #endregion
@@ -44,6 +44,8 @@ namespace Saas.Business.DependencyResolvers.Autofac
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
+            builder.RegisterType<CompanyUserBranchesManager>().As<ICompanyUserBranchesService>();
+            builder.RegisterType<EfCompanyUserBranchesDal>().As<ICompanyUserBranchesDal>();
 
 
             #endregion

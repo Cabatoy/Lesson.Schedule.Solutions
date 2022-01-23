@@ -132,6 +132,10 @@ namespace Saas.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsStudent")
+                        .HasColumnType("bit")
+                        .HasComment("IsStudent? Yes-No");
+
                     b.Property<byte[]>("PassWordHash")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
@@ -164,12 +168,20 @@ namespace Saas.DataAccess.Migrations
                     b.Property<int>("BranchId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CompanyUserId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BranchId");
+
+                    b.HasIndex("CompanyUserId");
 
                     b.ToTable("CompanyUserBranches", "Company");
 
@@ -276,7 +288,15 @@ namespace Saas.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Saas.Entities.Models.CompanyUser", "User")
+                        .WithMany("UserBranches")
+                        .HasForeignKey("CompanyUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Branch");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Saas.Entities.Models.UserClaims.CompanyOperationUserClaim", b =>
@@ -296,6 +316,11 @@ namespace Saas.DataAccess.Migrations
                     b.Navigation("CompanyUser");
 
                     b.Navigation("OperationClaim");
+                });
+
+            modelBuilder.Entity("Saas.Entities.Models.CompanyUser", b =>
+                {
+                    b.Navigation("UserBranches");
                 });
 #pragma warning restore 612, 618
         }

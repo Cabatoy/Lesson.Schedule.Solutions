@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Saas.Core.Security.Security.Encyption
 {
-    public class SecurityKeyHelper
+    public static class SecurityKeyHelper
     {
         public static SecurityKey CreateSecurityKey(string securityKey)
         {

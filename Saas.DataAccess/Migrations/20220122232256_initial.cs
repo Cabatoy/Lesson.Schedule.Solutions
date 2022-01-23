@@ -15,6 +15,9 @@ namespace Saas.DataAccess.Migrations
             migrationBuilder.EnsureSchema(
                 name: "Roles");
 
+            migrationBuilder.EnsureSchema(
+                name: "Problem");
+
             migrationBuilder.CreateTable(
                 name: "Company",
                 schema: "Company",
@@ -55,6 +58,23 @@ namespace Saas.DataAccess.Migrations
                 comment: "Yetkiler");
 
             migrationBuilder.CreateTable(
+                name: "Log",
+                schema: "Problem",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Detail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Audit = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Log", x => x.Id);
+                },
+                comment: "Log Kayıtları");
+
+            migrationBuilder.CreateTable(
                 name: "CompanyBranch",
                 schema: "Company",
                 columns: table => new
@@ -93,6 +113,7 @@ namespace Saas.DataAccess.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PassWordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PassWordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    IsStudent = table.Column<bool>(type: "bit", nullable: false, comment: "IsStudent? Yes-No"),
                     SysAdmin = table.Column<bool>(type: "bit", nullable: false, comment: "Company Admin"),
                     BranchAdmin = table.Column<bool>(type: "bit", nullable: false, comment: "Branch Admin"),
                     Deleted = table.Column<bool>(type: "bit", nullable: false)
@@ -109,29 +130,6 @@ namespace Saas.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 },
                 comment: "Firma Kullanicilari");
-
-            migrationBuilder.CreateTable(
-                name: "CompanyUserBranches",
-                schema: "Company",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BranchId = table.Column<int>(type: "int", nullable: false),
-                    IsAdmin = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CompanyUserBranches", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CompanyUserBranches_CompanyBranch_BranchId",
-                        column: x => x.BranchId,
-                        principalSchema: "Company",
-                        principalTable: "CompanyBranch",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "Kullanicinin Bağli oldugu Şubeler");
 
             migrationBuilder.CreateTable(
                 name: "CompanyOperationUserClaim",
@@ -163,6 +161,38 @@ namespace Saas.DataAccess.Migrations
                 },
                 comment: "Kullanici Yetkileri");
 
+            migrationBuilder.CreateTable(
+                name: "CompanyUserBranches",
+                schema: "Company",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CompanyUserId = table.Column<int>(type: "int", nullable: false),
+                    BranchId = table.Column<int>(type: "int", nullable: false),
+                    IsAdmin = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanyUserBranches", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CompanyUserBranches_CompanyBranch_BranchId",
+                        column: x => x.BranchId,
+                        principalSchema: "Company",
+                        principalTable: "CompanyBranch",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_CompanyUserBranches_CompanyUser_CompanyUserId",
+                        column: x => x.CompanyUserId,
+                        principalSchema: "Company",
+                        principalTable: "CompanyUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                },
+                comment: "Kullanicinin Bağli oldugu Şubeler");
+
             migrationBuilder.CreateIndex(
                 name: "IX_CompanyBranch_CompanyId",
                 schema: "Company",
@@ -192,6 +222,12 @@ namespace Saas.DataAccess.Migrations
                 schema: "Company",
                 table: "CompanyUserBranches",
                 column: "BranchId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CompanyUserBranches_CompanyUserId",
+                schema: "Company",
+                table: "CompanyUserBranches",
+                column: "CompanyUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -205,15 +241,19 @@ namespace Saas.DataAccess.Migrations
                 schema: "Company");
 
             migrationBuilder.DropTable(
+                name: "Log",
+                schema: "Problem");
+
+            migrationBuilder.DropTable(
                 name: "CompanyOperationClaim",
                 schema: "Roles");
 
             migrationBuilder.DropTable(
-                name: "CompanyUser",
+                name: "CompanyBranch",
                 schema: "Company");
 
             migrationBuilder.DropTable(
-                name: "CompanyBranch",
+                name: "CompanyUser",
                 schema: "Company");
 
             migrationBuilder.DropTable(

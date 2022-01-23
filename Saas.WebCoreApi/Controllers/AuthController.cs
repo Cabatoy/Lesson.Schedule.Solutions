@@ -44,14 +44,15 @@ namespace Saas.WebCoreApi.Controllers
 
         }
 
+
         /// <summary>
         /// firmaya ait kullanıcı oluşturmak için kullanılır, firma ve local ıd dolu gönderilmeli
         /// manager kısmında kullanıcı daha önce mail adresiyle kayıt yapılmış mıdır diye kontrol edilir
         /// </summary>
-        /// <param name="userForRegisterDto"></param>
+        /// <param name="CompanyFirstRegisterDto"></param>
         /// <returns></returns>
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
+        private async Task<IActionResult> Register(CompanyFirstRegisterDto userForRegisterDto)
         {
             var userExist =  _authService.UserExist(userForRegisterDto.Email);
             if (!userExist.Success)
@@ -79,8 +80,8 @@ namespace Saas.WebCoreApi.Controllers
         /// </summary>
         /// <param name="userForRegisterDto"></param>
         /// <returns></returns>
-        [HttpPost("registerForCompany")]
-        public async Task<IActionResult> RegisterForCompany(UserForRegisterDto userForRegisterDto)
+        [HttpPost("CompanyFirstRegister")]
+        public async Task<IActionResult> CompanyFirstRegister(CompanyFirstRegisterDto userForRegisterDto)
         {
             var registerResult =  _authService.RegisterForCompany(userForRegisterDto);
             if (registerResult.Success)

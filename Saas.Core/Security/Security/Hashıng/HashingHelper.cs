@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Saas.Core.Security.Security.Hashıng
 {
-    public class HashingHelper
+    public static class HashingHelper
     {
         public static void CreatePasswordHash(string password,out byte[] passwordHash,out byte[] passwordSalt)
         {

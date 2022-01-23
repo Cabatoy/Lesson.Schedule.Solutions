@@ -17,7 +17,7 @@ namespace Saas.Core.Aspect.Autofac.Logging
 {
     public class LogAspect :MethodInterception
     {
-        private LoggerServiceBase _loggerServiceBase;
+        private readonly LoggerServiceBase _loggerServiceBase;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public LogAspect(Type loggerService)

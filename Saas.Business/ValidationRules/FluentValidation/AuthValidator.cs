@@ -9,7 +9,7 @@ using Saas.Entities.Dto;
 
 namespace Saas.Business.ValidationRules.FluentValidation
 {
-    public class AuthValidator :AbstractValidator<UserForRegisterDto>
+    public class AuthValidator :AbstractValidator<CompanyFirstRegisterDto>
     {
         public AuthValidator()
         {
