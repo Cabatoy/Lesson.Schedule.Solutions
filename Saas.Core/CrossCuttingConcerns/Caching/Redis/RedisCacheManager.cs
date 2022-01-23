@@ -14,20 +14,17 @@ namespace Saas.Core.CrossCuttingConcerns.Caching.Redis
     public class RedisCacheManager :ICacheManager
     {
         private readonly RedisEndpoint _redisEndpoint;
-        private readonly IMemoryCache _memoryCache;
+
         private void RedisInvoker(Action<RedisClient> redisAction)
         {
-            using (var client = new RedisClient(_redisEndpoint))
-            {
-                redisAction.Invoke(client);
-            }
+            using var client = new RedisClient(_redisEndpoint);
+            redisAction.Invoke(client);
         }
         public RedisCacheManager() : this(ServiceTool.ServiceProvider.GetService<IMemoryCache>())
         {
         }
         public RedisCacheManager(IMemoryCache memoryCache)
         {
-            _memoryCache = memoryCache;
             _redisEndpoint = new RedisEndpoint("localhost",6379);
         }
 

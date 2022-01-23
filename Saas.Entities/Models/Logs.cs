@@ -13,18 +13,21 @@ namespace Saas.Entities.Models
 {
     [Comment("Log Kayıtları")]
     [Table("Log",Schema = "Problem")]
-    public class Logs :IEntity
+    public abstract class Logs :IEntity
     {
+        private String detail;
+        private String audit;
+
         /*
-         *([Detail],[Date],[Audit])
-         *
-         */
+*([Detail],[Date],[Audit])
+*
+*/
         [Key]
         public int Id { get; set; }
 
-        public string Detail { get; set; }
+        public string Detail { get => detail; set => detail = value; }
         public DateTime Date { get; set; }
-        public string Audit { get; set; }
+        public string Audit { get => audit; set => audit = value; }
 
     }
 }

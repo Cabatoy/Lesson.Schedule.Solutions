@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentEmail.Core;
 using Microsoft.AspNetCore.Identity;
 using Saas.Business.Abstract;
 using Saas.Business.Constants;
@@ -24,17 +25,48 @@ namespace Saas.Business.Concrete
     public class AuthManager :IAuthService
     {
         private readonly ICompanyUserService _userService;
-        private readonly ICompanyService _companyService;
         private readonly ITokenHelper _tokenHelper;
         private readonly ICompanyBranchDal _branchDal;
         private readonly ICompanyDal _companyDal;
+        private readonly ICompanyUserBranchesDal _userBranchesDal;
 
-        public AuthManager(ICompanyUserService usersService,ITokenHelper tokenHelper,ICompanyBranchDal branchDal,ICompanyDal companyDal)
+        public AuthManager(ICompanyUserService usersService,ITokenHelper tokenHelper,ICompanyBranchDal branchDal,ICompanyDal companyDal,ICompanyUserBranchesDal userBranchesDal)
         {
             _userService = usersService;
             _tokenHelper = tokenHelper;
             _branchDal = branchDal;
             _companyDal = companyDal;
+            _userBranchesDal = userBranchesDal;
+        }
+
+        [ValidationAspect(typeof(AuthValidator),Priority = 1)]
+        [LogAspect(typeof(DatabaseLogger))]
+        [TransactionScopeAspect]
+        public IDataResult<CompanyUser> Register(CompanyFirstRegisterDto userForRegisterDto)
+        {
+            //byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(userForRegisterDto.Password,out byte[] passwordHash,out byte[] passwordSalt);
+            var usr = new CompanyUser
+            {
+                CompanyId = userForRegisterDto.CompanyId,
+             //   UserBranches = userForRegisterDto.UserBranchesList,
+                Email = userForRegisterDto.Email,
+                FullName = userForRegisterDto.FullName,
+                PassWordHash = passwordHash,
+                PassWordSalt = passwordSalt,
+                IsStudent = userForRegisterDto.IsStudent,
+                SysAdmin = userForRegisterDto.SysAdmin,
+                BranchAdmin = userForRegisterDto.BranchAdmin,
+                Deleted = false
+            };
+            _userService.Add(usr);
+           
+            foreach (var br in userForRegisterDto.UserBranchesList)
+            {
+                _userBranchesDal.Add(new CompanyUserBranches() {UserId =usr.Id,BranchId = br,IsAdmin = userForRegisterDto.BranchAdmin });
+            }
+            
+            return new DataResult<CompanyUser>(usr,true,Messages.UsersAdded);
         }
 
         [LogAspect(typeof(DatabaseLogger))]
@@ -56,47 +88,10 @@ namespace Saas.Business.Concrete
 
         }
 
-        public IResult UserExist(string Email)
-        {
-            if (_userService.GetByMail(Email) != null)
-            {
-                return new ErrorResult(Messages.UserAlreadyExist);
-            }
-
-            return new SuccessResult();
-        }
-
-        [LogAspect(typeof(DatabaseLogger))]
-        [TransactionScopeAspect]
-        public IDataResult<CompanyUser> Register(UserForRegisterDto userForRegisterDto)
-        {
-            //byte[] passwordHash, passwordSalt;
-            HashingHelper.CreatePasswordHash(userForRegisterDto.Password,out byte[] passwordHash,out byte[] passwordSalt);
-            var usr = new CompanyUser
-            {
-                CompanyId = userForRegisterDto.CompanyId,
-                //branc = userForRegisterDto.LocalId,
-                Email = userForRegisterDto.Email,
-                FullName = userForRegisterDto.FullName,
-                PassWordHash = passwordHash,
-                PassWordSalt = passwordSalt,
-                Deleted = false
-            };
-            _userService.Add(usr);
-            return new DataResult<CompanyUser>(usr,true,Messages.UsersAdded);
-        }
-
-        public IDataResult<AccessToken> CreateAccessToken(CompanyUser user)
-        {
-            var claims = _userService.GetClaims(user);
-            var accesstoken = _tokenHelper.CreateToken(user,claims);
-            return new DataResult<AccessToken>(accesstoken,true,Messages.AccessTokenCreated);
-        }
-
         [ValidationAspect(typeof(AuthValidator),Priority = 1)]
         [LogAspect(typeof(DatabaseLogger))]
         [TransactionScopeAspect]
-        public IResult RegisterForCompany(UserForRegisterDto dt)
+        public IResult RegisterForCompany(CompanyFirstRegisterDto dt)
         {
             IResult result = BusinessRules.Run(CheckCompanyTaxNumberExist(dt.TaxNumber));
             if (result != null)
@@ -105,22 +100,22 @@ namespace Saas.Business.Concrete
             {
                 TaxNumber = dt.TaxNumber,
                 Adress = dt.Adress,
-                FullName = dt.CompanyName,
+                FullName = dt.CompanyName
             };
 
             _companyDal.Add(company);
 
-            CompanyBranch loc = new CompanyBranch
+            CompanyBranch branch = new CompanyBranch
             {
                 CompanyId = company.Id,
                 FullName = "Merkez",
                 Deleted = false
 
             };
-            _branchDal.Add(loc);
+            _branchDal.Add(branch);
 
             dt.CompanyId = company.Id;
-            dt.BranchId = loc.Id;
+          
             if (string.IsNullOrWhiteSpace(dt.Password) || string.IsNullOrEmpty(dt.Password))
                 dt.Password = GenerateRandomPassword(new PasswordOptions()
                 {
@@ -128,15 +123,57 @@ namespace Saas.Business.Concrete
                     RequireUppercase = true,
                     RequiredLength = 5
                 });
-            Register(dt);
+            var rt = UserExist(dt.Email);
+            if (!rt.Success)
+                return new ErrorDataResult<CompanyFirstRegisterDto>(message: rt.Message);
+
+            var usr = Register(dt);
+          
+            if (usr.Success)
+            {
+                _userBranchesDal.Add(new
+                    CompanyUserBranches()
+                    {
+                        Branch = branch,
+                        User = usr.Data,
+                        UserId = usr.Data.Id,
+                        BranchId = branch.Id,
+                        IsAdmin = usr.Data.BranchAdmin
+                    });
+            }
+
 
             Login(new UserForLoginDto()
             {
                 Email = dt.Email,
                 Password = dt.Password
             });
-            return new DataResult<UserForRegisterDto>(message: Messages.CompanyAdded);
+            return new DataResult<CompanyFirstRegisterDto>(message: Messages.CompanyAdded);
         }
+
+        [LogAspect(typeof(DatabaseLogger))]
+        public IResult UserExist(string email)
+        {
+            if (_userService.GetByMail(email) != null)
+            {
+                return new ErrorResult(Messages.UserAlreadyExist);
+            }
+
+            return new SuccessResult();
+        }
+
+
+        [LogAspect(typeof(DatabaseLogger))]
+        //  [TransactionScopeAspect]
+        public IDataResult<AccessToken> CreateAccessToken(CompanyUser user)
+        {
+            var claims = _userService.GetClaims(user);
+            var accesstoken = _tokenHelper.CreateToken(user,claims);
+            return new DataResult<AccessToken>(accesstoken,true,Messages.AccessTokenCreated);
+        }
+
+
+
 
         /// <summary>
         /// Generates a Random Password
@@ -147,16 +184,15 @@ namespace Saas.Business.Concrete
         /// <returns>A random password</returns>
         public static string GenerateRandomPassword(PasswordOptions opts = null)
         {
-            if (opts == null)
-                opts = new PasswordOptions()
-                {
-                    RequiredLength = 8,
-                    RequiredUniqueChars = 4,
-                    RequireDigit = true,
-                    RequireLowercase = true,
-                    RequireNonAlphanumeric = true,
-                    RequireUppercase = true
-                };
+            opts ??= new PasswordOptions()
+            {
+                RequiredLength = 8,
+                RequiredUniqueChars = 4,
+                RequireDigit = true,
+                RequireLowercase = true,
+                RequireNonAlphanumeric = true,
+                RequireUppercase = true
+            };
 
             string[] randomChars = new[] {
             "ABCDEFGHJKLMNOPQRSTUVWXYZ",    // uppercase 

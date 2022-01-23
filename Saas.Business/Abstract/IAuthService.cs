@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿
 using Saas.Core.Security.Security.Jwt;
 using Saas.Core.Utilities.Results;
 using Saas.Entities.Dto;
@@ -11,11 +11,11 @@ namespace Saas.Business.Abstract
 {
     public interface IAuthService
     {
-        IDataResult<CompanyUser> Register(UserForRegisterDto userForRegisterDto);
+        IDataResult<CompanyUser> Register(CompanyFirstRegisterDto userForRegisterDto);
         IDataResult<CompanyUser> Login(UserForLoginDto userForLoginDto);
 
-        IResult RegisterForCompany(UserForRegisterDto userForRegisterDto);
-        IResult UserExist(string Email);
+        IResult RegisterForCompany(CompanyFirstRegisterDto userForRegisterDto);
+        IResult UserExist(string email);
         IDataResult<AccessToken> CreateAccessToken(CompanyUser user);
 
     }

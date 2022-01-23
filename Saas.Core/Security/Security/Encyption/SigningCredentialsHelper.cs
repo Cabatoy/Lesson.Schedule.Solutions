@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Saas.Core.Security.Security.Encyption
 {
-    public class SigningCredentialsHelper
+    public static class SigningCredentialsHelper
     {
 
 

@@ -12,7 +12,7 @@ namespace Saas.Business.Abstract
     public interface ICompanyService
     {
         Task<IDataResult<List<Company>>> GetCompanyList();
-        Task<IDataResult<Company>> GetCompanyById(int CompanyId);
+        Task<IDataResult<Company>> GetCompanyById(int companyId);
         Task<IResult> Add(Company company);
         Task<IResult> Delete(Company company);
         Task<IResult> Update(Company company);

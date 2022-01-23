@@ -12,7 +12,7 @@ using Saas.DataAccess.EntityFrameWorkCore.DbContexts;
 namespace Saas.DataAccess.Migrations
 {
     [DbContext(typeof(GordionDbContext))]
-    [Migration("20220120155043_initial")]
+    [Migration("20220122232256_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -134,6 +134,10 @@ namespace Saas.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsStudent")
+                        .HasColumnType("bit")
+                        .HasComment("IsStudent? Yes-No");
+
                     b.Property<byte[]>("PassWordHash")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
@@ -166,16 +170,50 @@ namespace Saas.DataAccess.Migrations
                     b.Property<int>("BranchId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CompanyUserId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BranchId");
 
+                    b.HasIndex("CompanyUserId");
+
                     b.ToTable("CompanyUserBranches", "Company");
 
                     b.HasComment("Kullanicinin Bağli oldugu Şubeler");
+                });
+
+            modelBuilder.Entity("Saas.Entities.Models.Logs", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Audit")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Detail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Log", "Problem");
+
+                    b.HasComment("Log Kayıtları");
                 });
 
             modelBuilder.Entity("Saas.Entities.Models.UserClaims.CompanyOperationClaim", b =>
@@ -252,7 +290,15 @@ namespace Saas.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Saas.Entities.Models.CompanyUser", "User")
+                        .WithMany("UserBranches")
+                        .HasForeignKey("CompanyUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Branch");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Saas.Entities.Models.UserClaims.CompanyOperationUserClaim", b =>
@@ -272,6 +318,11 @@ namespace Saas.DataAccess.Migrations
                     b.Navigation("CompanyUser");
 
                     b.Navigation("OperationClaim");
+                });
+
+            modelBuilder.Entity("Saas.Entities.Models.CompanyUser", b =>
+                {
+                    b.Navigation("UserBranches");
                 });
 #pragma warning restore 612, 618
         }

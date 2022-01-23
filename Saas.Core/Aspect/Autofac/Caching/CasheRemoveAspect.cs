@@ -13,8 +13,8 @@ namespace Saas.Core.Aspect.Autofac.Caching
 {
     public class CasheRemoveAspect :MethodInterception
     {
-        private string _pattern;
-        private ICacheManager _cacheManager;
+        private readonly string _pattern;
+        private readonly ICacheManager _cacheManager;
 
         public CasheRemoveAspect(string pattern)
         {

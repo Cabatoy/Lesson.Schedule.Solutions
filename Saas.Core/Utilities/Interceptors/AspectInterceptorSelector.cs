@@ -16,7 +16,7 @@ namespace Saas.Core.Utilities.Interceptors
         {
             var classAttribute = type.GetCustomAttributes<MethodInterceptionBaseAttiribute>(true).ToList();
             var methodAttribute =
-                type.GetMethod(method.Name).GetCustomAttributes<MethodInterceptionBaseAttiribute>(true);
+                (type.GetMethod(method.Name) ?? throw new InvalidOperationException()).GetCustomAttributes<MethodInterceptionBaseAttiribute>(true);
             classAttribute.AddRange(methodAttribute);
             classAttribute.Add(new ExceptionLogAspect(typeof(DatabaseLogger)));
             //  classAttribute.Add(new ExceptionLogAspect(typeof(FileLogger)));

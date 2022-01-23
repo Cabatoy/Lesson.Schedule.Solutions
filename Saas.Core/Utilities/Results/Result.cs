@@ -9,23 +9,24 @@ namespace Saas.Core.Utilities.Results
     public class Result :IResult
     {
         //this ile cagrialn constracter diger tek parametre alan methodu da build eder
-        public Result(bool success,string message) : this(success)
+        protected Result(bool success,string message) : this(success)
         {
             Message = message;
             //Success=success;
         }
-        public Result(bool success)
+
+        protected Result(bool success)
         {
             Success = success;
         }
 
-        public Result(string message)
+        protected Result(string message)
         {
             Message = message;
         }
 
         public bool Success { get; set; }
 
-        public string Message { get; set; }
+        public string Message { get; init; }
     }
 }

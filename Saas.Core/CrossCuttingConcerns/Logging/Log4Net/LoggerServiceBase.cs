@@ -17,8 +17,9 @@ namespace Saas.Core.CrossCuttingConcerns.Logging.Log4Net
 {
     public class LoggerServiceBase
     {
-        private ILog _log;
-        public LoggerServiceBase(string name)
+        private readonly ILog _log;
+
+        protected LoggerServiceBase(string name)
         {
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(File.OpenRead("log4net.config"));
@@ -27,11 +28,11 @@ namespace Saas.Core.CrossCuttingConcerns.Logging.Log4Net
             _log = LogManager.GetLogger(logggeRepository.Name,name);
         }
 
-        public bool IsInfoEnabled => _log.IsInfoEnabled;
-        public bool IsDebugEnabled => _log.IsDebugEnabled;
-        public bool IsWarnEnabled => _log.IsWarnEnabled;
-        public bool IsFatalEnabled => _log.IsFatalEnabled;
-        public bool IsErrorEnabled => _log.IsErrorEnabled;
+        private bool IsInfoEnabled => _log.IsInfoEnabled;
+        private bool IsDebugEnabled => _log.IsDebugEnabled;
+        private bool IsWarnEnabled => _log.IsWarnEnabled;
+        private bool IsFatalEnabled => _log.IsFatalEnabled;
+        private bool IsErrorEnabled => _log.IsErrorEnabled;
         public void Info(LogDetail logMessage)
         {
             if (IsInfoEnabled)

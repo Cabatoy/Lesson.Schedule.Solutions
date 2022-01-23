@@ -23,9 +23,9 @@ namespace Saas.Core.Extensions
             claims.Add(new Claim(ClaimTypes.NameIdentifier,value: nameIdentifier));
         }
 
-        public static void AddUserOperationClaim(this ICollection<Claim> claims,string[] UserOperationClaim)
+        public static void AddUserOperationClaim(this ICollection<Claim> claims,string[] userOperationClaim)
         {
-            UserOperationClaim.ToList().ForEach(role => claims.Add(new Claim(ClaimTypes.Role,value: role)));
+            userOperationClaim.ToList().ForEach(role => claims.Add(new Claim(ClaimTypes.Role,value: role)));
         }
     }
 }

@@ -14,10 +14,12 @@ namespace Saas.Entities.Models.UserClaims
     [Table("CompanyOperationClaim",Schema = "Roles")]
     public class CompanyOperationClaim :IEntity
     {
+        private String name;
+
         [Key]
-        public int Id { get; set; }
+        public int Id { get; init; }
 
         [Required]
-        public string Name { get; set; }
+        public string Name { get => name; init => name = value; }
     }
 }
