@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Saas.Core.CrossCuttingConcerns.Logging;
 using Saas.Core.CrossCuttingConcerns.Logging.Log4Net;

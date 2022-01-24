@@ -49,7 +49,7 @@ namespace Saas.Business.Concrete
             var usr = new CompanyUser
             {
                 CompanyId = userForRegisterDto.CompanyId,
-             //   UserBranches = userForRegisterDto.UserBranchesList,
+                //   UserBranches = userForRegisterDto.UserBranchesList,
                 Email = userForRegisterDto.Email,
                 FullName = userForRegisterDto.FullName,
                 PassWordHash = passwordHash,
@@ -60,12 +60,12 @@ namespace Saas.Business.Concrete
                 Deleted = false
             };
             _userService.Add(usr);
-           
+
             foreach (var br in userForRegisterDto.UserBranchesList)
             {
-                _userBranchesDal.Add(new CompanyUserBranches() {UserId =usr.Id,BranchId = br,IsAdmin = userForRegisterDto.BranchAdmin });
+                _userBranchesDal.Add(new CompanyUserBranches() { CompanyUserId = usr.Id,BranchId = br,IsAdmin = userForRegisterDto.BranchAdmin });
             }
-            
+
             return new DataResult<CompanyUser>(usr,true,Messages.UsersAdded);
         }
 
@@ -115,7 +115,7 @@ namespace Saas.Business.Concrete
             _branchDal.Add(branch);
 
             dt.CompanyId = company.Id;
-          
+
             if (string.IsNullOrWhiteSpace(dt.Password) || string.IsNullOrEmpty(dt.Password))
                 dt.Password = GenerateRandomPassword(new PasswordOptions()
                 {
@@ -128,18 +128,18 @@ namespace Saas.Business.Concrete
                 return new ErrorDataResult<CompanyFirstRegisterDto>(message: rt.Message);
 
             var usr = Register(dt);
-          
+
             if (usr.Success)
             {
                 _userBranchesDal.Add(new
                     CompanyUserBranches()
-                    {
-                        Branch = branch,
-                        User = usr.Data,
-                        UserId = usr.Data.Id,
-                        BranchId = branch.Id,
-                        IsAdmin = usr.Data.BranchAdmin
-                    });
+                {
+                    Branch = branch,
+                    CompanyUser = usr.Data,
+                    CompanyUserId = usr.Data.Id,
+                    BranchId = branch.Id,
+                    IsAdmin = usr.Data.BranchAdmin
+                });
             }
 
 

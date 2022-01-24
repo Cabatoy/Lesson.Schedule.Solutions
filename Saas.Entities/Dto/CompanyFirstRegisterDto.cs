@@ -27,5 +27,10 @@ namespace Saas.Entities.Dto
             CompanyId = 0;
             UserBranchesList = new List<int>();
         }
+
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public string UpdatedBy { get; set; }
+        public DateTime? UpdatedOn { get; set; }
     }
 }

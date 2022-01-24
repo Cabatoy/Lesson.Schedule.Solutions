@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using EntityFrameworkCore.EncryptColumn;
@@ -8,6 +9,7 @@ using EntityFrameworkCore.EncryptColumn.Extension;
 using EntityFrameworkCore.EncryptColumn.Interfaces;
 using EntityFrameworkCore.EncryptColumn.Util;
 using Microsoft.EntityFrameworkCore;
+using Saas.Entities.Generic;
 using Saas.Entities.Models;
 using Saas.Entities.Models.UserClaims;
 
@@ -77,7 +79,6 @@ public class GordionDbContext :DbContext
 
         #endregion
        
-
     }
 
     #region Company-User-Branch
@@ -101,4 +102,58 @@ public class GordionDbContext :DbContext
     #endregion
 
     public DbSet<Logs> Logs { get; set; }
+
+
+    public virtual void Save()
+    {
+        base.SaveChanges();
+    }
+
+    private string UserProvider
+    {
+        get
+        {
+            if (!string.IsNullOrEmpty(WindowsIdentity.GetCurrent().Name))
+                return WindowsIdentity.GetCurrent().Name.Split('\\')[1];
+            return string.Empty;
+        }
+    }
+    #region default alanları insert-update
+
+    public Func<DateTime> TimestampProvider { get; set; } = ()
+        => DateTime.UtcNow;
+    public override int SaveChanges()
+    {
+        TrackChanges();
+        return base.SaveChanges();
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        TrackChanges();
+        return await base.SaveChangesAsync(cancellationToken);
+    }
+
+    private void TrackChanges()
+    {
+        foreach (var entry in this.ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+        {
+            if (entry.Entity is IEntity)
+            {
+                var auditable = entry.Entity as IEntity;
+                if (entry.State == EntityState.Added)
+                {
+                    auditable.CreatedBy = UserProvider;//  
+                    auditable.CreatedOn = TimestampProvider();
+                    auditable.UpdatedOn = TimestampProvider();
+                }
+                else
+                {
+                    auditable.UpdatedBy = UserProvider;
+                    auditable.UpdatedOn = TimestampProvider();
+                }
+            }
+        }
+    } 
+    #endregion
 }

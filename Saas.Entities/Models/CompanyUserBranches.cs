@@ -15,25 +15,31 @@ namespace Saas.Entities.Models
     [Table("CompanyUserBranches",Schema = "Company")]
     public class CompanyUserBranches :IEntity
     {
-        private CompanyUser user;
 
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "User")]
-        public virtual int UserId { get; set; }
+
+        [Display(Name = "CompanyUser")]
+        public virtual int CompanyUserId { get; set; }
 
         [ForeignKey("CompanyUserId"),]
 
-        public virtual CompanyUser User { get => user; set => user = value; }
+        public virtual CompanyUser CompanyUser { get; set; }
 
 
         [Display(Name = "Branch")]
         public virtual int BranchId { get; set; }
         [ForeignKey("BranchId")]
-        public virtual CompanyBranch Branch { get; set; }
+        public virtual CompanyBranch Branch { get; set ; }
+
 
         [Required, DefaultValue(0)]
         public bool IsAdmin { get; set; }
+
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public string UpdatedBy { get; set; }
+        public DateTime? UpdatedOn { get; set; }
     }
 }
