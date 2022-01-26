@@ -64,5 +64,9 @@ namespace Saas.Entities.Models
         public bool Deleted { get; set; }
 
         public virtual List<CompanyUserBranches> UserBranches { get => userBranches; set => userBranches = value; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public string? UpdatedBy { get; set; }
+        public DateTime? UpdatedOn { get; set; }
     }
 }

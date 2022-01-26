@@ -7,6 +7,7 @@ using FluentEmail.Core;
 using Microsoft.AspNetCore.Identity;
 using Saas.Business.Abstract;
 using Saas.Business.Constants;
+using Saas.Business.ValidationRules.BusinessRules;
 using Saas.Business.ValidationRules.FluentValidation;
 using Saas.Core.Aspect.Autofac.Logging;
 using Saas.Core.Aspect.Autofac.Transaction;
@@ -45,11 +46,15 @@ namespace Saas.Business.Concrete
         public IDataResult<CompanyUser> Register(CompanyFirstRegisterDto userForRegisterDto)
         {
             //byte[] passwordHash, passwordSalt;
+            IResult result = BusinessRules.Run(EmailValidation.Run(userForRegisterDto.Email));
+            if (result != null)
+                return new DataResult<CompanyUser>(null,false,result.Message);
+
             HashingHelper.CreatePasswordHash(userForRegisterDto.Password,out byte[] passwordHash,out byte[] passwordSalt);
             var usr = new CompanyUser
             {
                 CompanyId = userForRegisterDto.CompanyId,
-             //   UserBranches = userForRegisterDto.UserBranchesList,
+                //   UserBranches = userForRegisterDto.UserBranchesList,
                 Email = userForRegisterDto.Email,
                 FullName = userForRegisterDto.FullName,
                 PassWordHash = passwordHash,
@@ -60,23 +65,30 @@ namespace Saas.Business.Concrete
                 Deleted = false
             };
             _userService.Add(usr);
-           
+
             foreach (var br in userForRegisterDto.UserBranchesList)
             {
-                _userBranchesDal.Add(new CompanyUserBranches() {UserId =usr.Id,BranchId = br,IsAdmin = userForRegisterDto.BranchAdmin });
+                _userBranchesDal.Add(new CompanyUserBranches()
+                {
+                    CompanyUserId = usr.Id,
+                    BranchId = br,
+                    IsAdmin = userForRegisterDto.BranchAdmin
+                });
             }
-            
+
             return new DataResult<CompanyUser>(usr,true,Messages.UsersAdded);
         }
 
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<CompanyUser> Login(UserForLoginDto userForLoginDto)
         {
+            IResult result = BusinessRules.Run(EmailValidation.Run(userForLoginDto.Email));
+            if (result != null)
+                return new DataResult<CompanyUser>(result.Message);
+
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
             if (userToCheck == null)
-            {
                 return new DataResult<CompanyUser>(Messages.UserNotFound);
-            }
 
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password,userToCheck.PassWordHash,userToCheck.PassWordSalt))
             {
@@ -93,9 +105,15 @@ namespace Saas.Business.Concrete
         [TransactionScopeAspect]
         public IResult RegisterForCompany(CompanyFirstRegisterDto dt)
         {
-            IResult result = BusinessRules.Run(CheckCompanyTaxNumberExist(dt.TaxNumber));
+            var result = BusinessRules.Run(CheckCompanyTaxNumberExist(dt.TaxNumber));
             if (result != null)
                 return result;
+
+            var resultsForMail = BusinessRules.Run(EmailValidation.Run(dt.Email));
+            if (resultsForMail != null)
+                return new DataResult<CompanyUser>(resultsForMail.Message);
+
+
             Company company = new Company
             {
                 TaxNumber = dt.TaxNumber,
@@ -115,7 +133,7 @@ namespace Saas.Business.Concrete
             _branchDal.Add(branch);
 
             dt.CompanyId = company.Id;
-          
+
             if (string.IsNullOrWhiteSpace(dt.Password) || string.IsNullOrEmpty(dt.Password))
                 dt.Password = GenerateRandomPassword(new PasswordOptions()
                 {
@@ -128,18 +146,18 @@ namespace Saas.Business.Concrete
                 return new ErrorDataResult<CompanyFirstRegisterDto>(message: rt.Message);
 
             var usr = Register(dt);
-          
+
             if (usr.Success)
             {
                 _userBranchesDal.Add(new
                     CompanyUserBranches()
-                    {
-                        Branch = branch,
-                        User = usr.Data,
-                        UserId = usr.Data.Id,
-                        BranchId = branch.Id,
-                        IsAdmin = usr.Data.BranchAdmin
-                    });
+                {
+                    Branch = branch,
+                    CompanyUser = usr.Data,
+                    CompanyUserId = usr.Data.Id,
+                    BranchId = branch.Id,
+                    IsAdmin = usr.Data.BranchAdmin
+                });
             }
 
 

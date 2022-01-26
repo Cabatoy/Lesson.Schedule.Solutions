@@ -26,6 +26,7 @@ namespace Saas.Core.CrossCuttingConcerns.Logging.Log4Net
             ILoggerRepository logggeRepository = LogManager.CreateRepository(Assembly.GetEntryAssembly(),typeof(log4net.Repository.Hierarchy.Hierarchy));
             log4net.Config.XmlConfigurator.Configure(logggeRepository,xmlDocument["log4net"]);
             _log = LogManager.GetLogger(logggeRepository.Name,name);
+            
         }
 
         private bool IsInfoEnabled => _log.IsInfoEnabled;

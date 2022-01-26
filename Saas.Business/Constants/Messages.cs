@@ -1,4 +1,6 @@
-﻿namespace Saas.Business.Constants
+﻿using Saas.Entities.Models;
+
+namespace Saas.Business.Constants
 {
     public static class Messages
     {
@@ -57,7 +59,7 @@
         public static readonly string WareHouseDeleted = "Ambar Silindi";
         public static readonly string WareHouseAdded = "Ambar Eklendi";
 
-        public static readonly  string WareHouseFloorAdded = "Kat Eklendi";
+        public static readonly string WareHouseFloorAdded = "Kat Eklendi";
         public static readonly string WareHouseFloorDeleted = "Kat Silindi";
         public static readonly string WareHouseFloorUpdated = "Kat Güncellendi";
 
@@ -73,5 +75,6 @@
         public static readonly string WareHouseCorridorAdded = "Koridor Eklendi";
         public static readonly string WareHouseCorridorDeleted = "Koridor Silindi";
         public static readonly string WareHouseCorridorUpdated = "Koridor Güncellendi";
+        public static readonly string MailValidationError = "Mail Adresi Dogru Formatta Değil.";
     }
 }

@@ -2,7 +2,6 @@
 using System;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using Saas.Core.CrossCuttingConcerns.Caching;
 using Saas.Core.Utilities.IoC;
 using Saas.Core.Extensions;
 

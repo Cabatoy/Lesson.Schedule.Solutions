@@ -16,6 +16,7 @@ namespace Saas.Business.ValidationRules.FluentValidation
             RuleFor(p => p.TaxNumber).NotEmpty().WithMessage(Messages.TaxNumberValidationError);
             RuleFor(p => p.TaxNumber).Length(10,11).WithMessage(Messages.TaxNumberLengtValidationError);
             RuleFor(p => p.Email).NotEmpty().WithMessage(Messages.EmailCanNotBlank);
+            
         }
     }
 }

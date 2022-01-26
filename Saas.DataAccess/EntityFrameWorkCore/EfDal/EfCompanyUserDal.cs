@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Saas.DataAccess.EntityFrameWorkCore.DbContexts;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
 using Saas.Entities.Generic;
@@ -23,6 +24,17 @@ namespace Saas.DataAccess.EntityFrameWorkCore.EfDal
                          select new CompanyOperationClaim { Id = operationClaim.Id,Name = operationClaim.Name };
             return result.ToList();
             // return new List<CompanyOperationClaim>();
+        }
+
+        public async Task<List<CompanyOperationClaim>> GetClaimsAsync(CompanyUser user)
+        {
+            using var context = new GordionDbContext();
+            var result = from operationClaim in context.CompanyOperationClaim
+                         join companyOperationUserClaim in context.CompanyOperationUserClaim
+                             on operationClaim.Id equals companyOperationUserClaim.CompanyOperationClaimId
+                         where companyOperationUserClaim.CompanyUserId == user.Id
+                         select new CompanyOperationClaim { Id = operationClaim.Id,Name = operationClaim.Name };
+            return await result.ToListAsync();
         }
     }
 }

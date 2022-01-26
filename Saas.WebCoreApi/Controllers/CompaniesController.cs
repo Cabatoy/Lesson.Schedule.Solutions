@@ -31,9 +31,9 @@ namespace Saas.WebCoreApi.Controllers
         [HttpGet(template: "getall")]
         //[Authorize()]
         //[Authorize(Roles = "Company.List,asdas,asdasda,")]
-        public async Task<IActionResult> GetList()
+        public IActionResult GetList()
         {
-            var result = await _companyService.GetCompanyList();
+            var result =  _companyService.GetCompanyList();
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -50,9 +50,9 @@ namespace Saas.WebCoreApi.Controllers
         /// <returns></returns>
         [HttpGet(template: "getById/{companyId:int}")]
         // [Route("GetById/{companyId:int}")]
-        public async Task<IActionResult> GetById(int companyId)
+        public IActionResult GetById(int companyId)
         {
-            var result = await _companyService.GetCompanyById(companyId);
+            var result =  _companyService.GetCompanyById(companyId);
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -68,9 +68,9 @@ namespace Saas.WebCoreApi.Controllers
         /// <returns></returns>
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add(Company company)
+        public IActionResult Add(Company company)
         {
-            var result = await _companyService.Add(company);
+            var result =  _companyService.Add(company);
             var cacheUpdate = GetList();
             if (result.Success)
             {
@@ -88,9 +88,9 @@ namespace Saas.WebCoreApi.Controllers
         /// <returns></returns>
         //[HttpPost(template: "update")]
         [HttpPut(template: "update")]
-        public async Task<IActionResult> Update(Company company)
+        public IActionResult Update(Company company)
         {
-            var result = await _companyService.Update(company);
+            var result =  _companyService.Update(company);
             var CacheUpdate = GetList();
             if (result.Success)
             {
@@ -108,10 +108,10 @@ namespace Saas.WebCoreApi.Controllers
         /// <returns></returns>
         [HttpPost(template: "delete")]
         //  [Route("Delete")]
-        public async Task<IActionResult> Delete(Company company)
+        public IActionResult Delete(Company company)
         {
 
-            var result = await _companyService.Update(PrepareForDelete(company));
+            var result =  _companyService.Update(PrepareForDelete(company));
             var CacheUpdate = GetList();
             if (result.Success)
             {
@@ -133,5 +133,16 @@ namespace Saas.WebCoreApi.Controllers
             return company;
         }
 
+        [HttpGet(template: "getListAsync")]
+        public async Task<IActionResult> GetListAsync()
+        {
+            var result = await _companyService.GetCompanyListAsync();
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            else
+                return BadRequest(result.Message);
+        }
     }
 }
