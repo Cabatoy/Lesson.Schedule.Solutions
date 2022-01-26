@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Saas.Core.CrossCuttingConcerns.Caching;
 using Saas.Core.CrossCuttingConcerns.Caching.Microsoft;
+using Saas.Core.CrossCuttingConcerns.Caching.Redis;
 using Saas.Core.CrossCuttingConcerns.Mailing;
 using Saas.Core.CrossCuttingConcerns.Mailing.FluentEmail;
 using Saas.Core.Utilities.IoC;
@@ -15,10 +16,10 @@ namespace Saas.Core.DependencyResolvers
         {
             services.AddMemoryCache();
             services.AddSingleton<ICacheManager,MemoryCacheManager>();
-            //services.AddSingleton<ICacheManager, RedisCacheManager>();
+            //services.AddSingleton<ICacheManager,RedisCacheManager>();
             services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
             services.AddSingleton<Stopwatch>();
-    //        services.AddSingleton<IMailingManager, FluentEmailManager>();
+            //        services.AddSingleton<IMailingManager, FluentEmailManager>();
             //services.AddSingleton<>()
         }
     }

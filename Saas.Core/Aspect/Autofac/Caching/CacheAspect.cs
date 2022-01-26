@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
@@ -28,6 +30,7 @@ namespace Saas.Core.Aspect.Autofac.Caching
         {
             var methodName = string.Format($"{invocation?.Method?.ReflectedType?.FullName}.{invocation?.Method?.Name}");
             var argument = invocation?.Arguments.ToList();
+        
             if (argument != null)
             {
                 var key = $"{methodName}({string.Join(",",argument.Select(x => x?.ToString() ?? "<Null>"))})";
@@ -37,7 +40,9 @@ namespace Saas.Core.Aspect.Autofac.Caching
                     //return;
                     if (invocation != null)
                     {
+                        
                         invocation.ReturnValue = _cacheManager.Get(key);
+                        
                         return;
                     }
                 }

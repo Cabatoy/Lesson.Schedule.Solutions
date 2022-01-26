@@ -13,7 +13,7 @@ namespace Saas.Entities.Generic
     /// t refarans tipinde olmali Ientityden 
     /// implemente edilis newlenebilir 
     /// her sey gonderilebilir buraya</typeparam>
-    public interface IEntityRepositoryAsync<T> where T : class
+    public interface IEntityRepositoryAsync<T> where T : class, IEntity, new()
     {
         //T Add(T t);
         Task<T> AddAsyn(T t);
@@ -30,13 +30,13 @@ namespace Saas.Entities.Generic
         Task<ICollection<T>> FindByAsyn(Expression<Func<T,bool>> predicate);
         //T Get(int id);
         //IQueryable<T> GetAll();
-        Task<ICollection<T>> GetAllAsyn();
+        Task<ICollection<T>> GetAllAsync();
         //IQueryable<T> GetAllIncluding(params Expression<Func<T,object>>[] includeProperties);
         Task<T> GetAsync(int id);
         //void Save();
         Task<int> SaveAsync();
         //T Update(T t,object key);
         Task<T> UpdateAsyn(T t,object key);
-
+      
     }
 }

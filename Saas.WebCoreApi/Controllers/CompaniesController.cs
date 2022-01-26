@@ -133,5 +133,16 @@ namespace Saas.WebCoreApi.Controllers
             return company;
         }
 
+        [HttpGet(template: "getListAsync")]
+        public async Task<IActionResult> GetListAsync()
+        {
+            var result = await _companyService.GetCompanyListAsync();
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            else
+                return BadRequest(result.Message);
+        }
     }
 }

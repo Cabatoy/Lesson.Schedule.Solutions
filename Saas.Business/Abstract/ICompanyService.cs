@@ -17,6 +17,11 @@ namespace Saas.Business.Abstract
         IResult Delete(Company company);
         IResult Update(Company company);
 
-       
+        Task<IDataResult<List<Company>>> GetCompanyListAsync();
+        Task<IDataResult<Company>> GetCompanyByIdAsync(int companyId);
+        Task<IResult> AddAsync(Company company);
+        Task<IResult> DeleteAsync(Company company);
+        Task<IResult> UpdateAsync(Company company);
+
     }
 }

@@ -7,6 +7,7 @@ using FluentEmail.Core;
 using Microsoft.AspNetCore.Identity;
 using Saas.Business.Abstract;
 using Saas.Business.Constants;
+using Saas.Business.ValidationRules.BusinessRules;
 using Saas.Business.ValidationRules.FluentValidation;
 using Saas.Core.Aspect.Autofac.Logging;
 using Saas.Core.Aspect.Autofac.Transaction;
@@ -45,6 +46,10 @@ namespace Saas.Business.Concrete
         public IDataResult<CompanyUser> Register(CompanyFirstRegisterDto userForRegisterDto)
         {
             //byte[] passwordHash, passwordSalt;
+            IResult result = BusinessRules.Run(EmailValidation.Run(userForRegisterDto.Email));
+            if (result != null)
+                return new DataResult<CompanyUser>(null,false,result.Message);
+
             HashingHelper.CreatePasswordHash(userForRegisterDto.Password,out byte[] passwordHash,out byte[] passwordSalt);
             var usr = new CompanyUser
             {
@@ -63,7 +68,12 @@ namespace Saas.Business.Concrete
 
             foreach (var br in userForRegisterDto.UserBranchesList)
             {
-                _userBranchesDal.Add(new CompanyUserBranches() { CompanyUserId = usr.Id,BranchId = br,IsAdmin = userForRegisterDto.BranchAdmin });
+                _userBranchesDal.Add(new CompanyUserBranches()
+                {
+                    CompanyUserId = usr.Id,
+                    BranchId = br,
+                    IsAdmin = userForRegisterDto.BranchAdmin
+                });
             }
 
             return new DataResult<CompanyUser>(usr,true,Messages.UsersAdded);
@@ -72,11 +82,13 @@ namespace Saas.Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<CompanyUser> Login(UserForLoginDto userForLoginDto)
         {
+            IResult result = BusinessRules.Run(EmailValidation.Run(userForLoginDto.Email));
+            if (result != null)
+                return new DataResult<CompanyUser>(result.Message);
+
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
             if (userToCheck == null)
-            {
                 return new DataResult<CompanyUser>(Messages.UserNotFound);
-            }
 
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password,userToCheck.PassWordHash,userToCheck.PassWordSalt))
             {
@@ -93,9 +105,15 @@ namespace Saas.Business.Concrete
         [TransactionScopeAspect]
         public IResult RegisterForCompany(CompanyFirstRegisterDto dt)
         {
-            IResult result = BusinessRules.Run(CheckCompanyTaxNumberExist(dt.TaxNumber));
+            var result = BusinessRules.Run(CheckCompanyTaxNumberExist(dt.TaxNumber));
             if (result != null)
                 return result;
+
+            var resultsForMail = BusinessRules.Run(EmailValidation.Run(dt.Email));
+            if (resultsForMail != null)
+                return new DataResult<CompanyUser>(resultsForMail.Message);
+
+
             Company company = new Company
             {
                 TaxNumber = dt.TaxNumber,

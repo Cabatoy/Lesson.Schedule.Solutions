@@ -17,7 +17,7 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
         using var context = new TContext();
         var addedcontext = context.Entry(entity);
         addedcontext.State = EntityState.Added;
-        var ss = context.SaveChanges();
+        var ss = context.SaveChanges();//  SaveChanges();
         //gonderilen entity i context e abone ettik.
         //ister update ister delete ne yapacaksan 
     }
@@ -55,13 +55,13 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
 
     #region async
 
-    public IQueryable<TEntity> GetAll()
+    public virtual IQueryable<TEntity> GetAll()
     {
         using var _context = new TContext();
         return _context.Set<TEntity>();
     }
 
-    public virtual async Task<ICollection<TEntity>> GetAllAsyn()
+    public virtual async Task<ICollection<TEntity>> GetAllAsync()
     {
         using var _context = new TContext();
         return await _context.Set<TEntity>().ToListAsync();
@@ -70,9 +70,11 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
     public virtual async Task<TEntity> GetAsync(int id)
     {
         using var _context = new TContext();
+#pragma warning disable CS8603 // Possible null reference return.
         return await _context.Set<TEntity>().FindAsync(id);
+#pragma warning restore CS8603 // Possible null reference return.
     }
-    
+
     public virtual async Task<TEntity> AddAsyn(TEntity t)
     {
         using var _context = new TContext();
@@ -81,26 +83,26 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
         return t;
 
     }
-    
+
     public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity,bool>> match)
     {
         using var _context = new TContext();
         return await _context.Set<TEntity>().SingleOrDefaultAsync(match);
     }
-    
-    public async Task<ICollection<TEntity>> FindAllAsync(Expression<Func<TEntity,bool>> match)
+
+    public virtual async Task<ICollection<TEntity>> FindAllAsync(Expression<Func<TEntity,bool>> match)
     {
         using var _context = new TContext();
         return await _context.Set<TEntity>().Where(match).ToListAsync();
     }
-    
+
     public virtual async Task<int> DeleteAsyn(TEntity entity)
     {
         using var _context = new TContext();
         _context.Set<TEntity>().Remove(entity);
         return await _context.SaveChangesAsync();
     }
-    
+
     public virtual async Task<TEntity> UpdateAsyn(TEntity t,object key)
     {
         using var _context = new TContext();
@@ -114,25 +116,26 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
         }
         return exist;
     }
-    
-    public async Task<int> CountAsync()
+
+
+    public virtual async Task<int> CountAsync()
     {
         using var _context = new TContext();
         return await _context.Set<TEntity>().CountAsync();
     }
-    
+
     public virtual async Task<int> SaveAsync()
     {
         using var _context = new TContext();
         return await _context.SaveChangesAsync();
     }
-    
+
     public virtual async Task<ICollection<TEntity>> FindByAsyn(Expression<Func<TEntity,bool>> predicate)
     {
         using var _context = new TContext();
         return await _context.Set<TEntity>().Where(predicate).ToListAsync();
     }
-    
+
     private bool disposed = false;
     protected virtual void Dispose(bool disposing)
     {
@@ -154,5 +157,5 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
     }
     #endregion
 
-    
+
 }
