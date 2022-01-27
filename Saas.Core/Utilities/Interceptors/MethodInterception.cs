@@ -33,40 +33,6 @@ namespace Saas.Core.Utilities.Interceptors
 
         public override void Intercept(IInvocation invocation)
         {
-
-            if (IsAsyncMethod(invocation.Method))
-            {
-                InterceptAsync(invocation);
-            }
-            else
-            {
-                InterceptSync(invocation);
-            }
-        }
-        private void InterceptAsync(IInvocation invocation)
-        {
-            //Before method execution
-          
-
-            //Calling the actual method, but execution has not been finished yet
-            invocation.Proceed();
-
-            //We should wait for finishing of the method execution
-            ((Task)invocation.ReturnValue)
-                .ContinueWith(task =>
-                {
-                    //After method execution
-                   
-                    //Logger.InfoFormat(
-                    //    "MeasureDurationAsyncInterceptor: {0} executed in {1} milliseconds.",
-                    //    invocation.MethodInvocationTarget.Name,
-                    //    stopwatch.Elapsed.TotalMilliseconds.ToString("0.000")
-                    //    );
-                });
-        }
-
-        private void InterceptSync(IInvocation invocation)
-        {
             var isSuccess = true;
             OnBefore(invocation);
             try
@@ -86,8 +52,9 @@ namespace Saas.Core.Utilities.Interceptors
             }
             OnAfter(invocation);
         }
+       
         private static bool IsAsyncMethod(MethodInfo method)
-        {
+        {//invocation.Method)
             return (
                 method.ReturnType == typeof(Task) ||
                 (method.ReturnType.IsGenericType && method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
