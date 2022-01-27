@@ -10,7 +10,7 @@ namespace Saas.Core.CrossCuttingConcerns.Mailing
 {
     public interface IMailingManager
     {
-        Task<string> SendSample();
+        Task<IResult> SendSample();
 
        // Task<string> Send(Email mail);
 

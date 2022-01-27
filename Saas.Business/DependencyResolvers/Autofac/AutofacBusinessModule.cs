@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
+using Microsoft.Extensions.Caching.Distributed;
 using Saas.Business.Abstract;
 using Saas.Business.Concrete;
 using Saas.Core.Security.Security.Jwt;
@@ -19,17 +20,11 @@ namespace Saas.Business.DependencyResolvers.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            #region firma-sube-lisans 
-
             builder.RegisterType<CompanyManager>().As<ICompanyService>();
             builder.RegisterType<EfCompanyDal>().As<ICompanyDal>();
 
             builder.RegisterType<CompanyBranchesManager>().As<ICompanyBranchesService>();
             builder.RegisterType<EfCompanyBranchDal>().As<ICompanyBranchDal>();
-
-            #endregion
-
-            #region Kullanici
 
             builder.RegisterType<OperationClaimManager>().As<IOperationClaimService>();
             builder.RegisterType<EfCompanyOperationClaimDal>().As<ICompanyOperationClaimDal>();
@@ -40,15 +35,12 @@ namespace Saas.Business.DependencyResolvers.Autofac
             builder.RegisterType<CompanyUsersManager>().As<ICompanyUserService>();
             builder.RegisterType<EfCompanyUserDal>().As<ICompanyUserDal>();
 
-
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
             builder.RegisterType<CompanyUserBranchesManager>().As<ICompanyUserBranchesService>();
             builder.RegisterType<EfCompanyUserBranchesDal>().As<ICompanyUserBranchesDal>();
 
-
-            #endregion
 
 
 
