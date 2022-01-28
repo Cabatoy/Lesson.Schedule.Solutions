@@ -12,7 +12,7 @@ using Saas.DataAccess.EntityFrameWorkCore.DbContexts;
 namespace Saas.DataAccess.Migrations
 {
     [DbContext(typeof(GordionDbContext))]
-    [Migration("20220124134554_initial")]
+    [Migration("20220127162351_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
