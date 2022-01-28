@@ -19,18 +19,11 @@ public class GordionDbContext :DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(connectionString: @"Server =.; Database =ScheduleProject ; User Id =sa ; Password =kutukola ; trusted_connection=true;");
-        /*
-         *Connection
-           Asp.net
-           "Data Source=SQL5109.site4now.net;Initial Catalog=db_a7f4a9_dbadmin;User Id=db_a7f4a9_dbadmin_admin;Password=kutukola231090"
-            
-           Klasik asp
-           "Provider=SQLOLEDB;Data Source=SQL5109.site4now.net;Initial Catalog=;User Id=db_a7f4a9_dbadmin_admin;Password=kutukola231090"
+           optionsBuilder.UseSqlServer(connectionString: @"Server =localhost,1401; Database =ScheduleProjects ; User Id =sa ; Password =<fanta123> ; ");
 
+        //Fanta123
+        //trusted_connection=true;
 
-        @"Server =.; Database =FirstStep ; User Id =sa ; Password =kutukola ; trusted_connection=true;"
-         */
         //optionsBuilder.UseSqlServer(
         //    connectionString:
         //    @"Server =SQL5109.site4now.net; Database =db_a7f4a9_dbadmin; User Id =db_a7f4a9_dbadmin_admin; Password =kutukola231090 ;");
@@ -79,7 +72,7 @@ public class GordionDbContext :DbContext
 
         #endregion
 
-       
+
 
     }
 
@@ -156,6 +149,6 @@ public class GordionDbContext :DbContext
                 }
             }
         }
-    } 
+    }
     #endregion
 }

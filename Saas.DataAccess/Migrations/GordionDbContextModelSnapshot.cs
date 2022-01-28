@@ -372,13 +372,13 @@ namespace Saas.DataAccess.Migrations
                     b.HasOne("Saas.Entities.Models.CompanyBranch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Saas.Entities.Models.CompanyUser", "CompanyUser")
                         .WithMany("UserBranches")
                         .HasForeignKey("CompanyUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Branch");
