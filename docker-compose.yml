@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  saas.webcoreapi:
+    image: ${DOCKER_REGISTRY-}saaswebcoreapi
+    build:
+      context: .
+      dockerfile: Saas.WebCoreApi/Dockerfile
+
+  saas.mvcuicore:
+    image: ${DOCKER_REGISTRY-}saasmvcuicore
+    build:
+      context: .
+      dockerfile: Saas.MVCUiCore/Dockerfile
+

@@ -4,10 +4,6 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
-using EntityFrameworkCore.EncryptColumn;
-using EntityFrameworkCore.EncryptColumn.Extension;
-using EntityFrameworkCore.EncryptColumn.Interfaces;
-using EntityFrameworkCore.EncryptColumn.Util;
 using Microsoft.EntityFrameworkCore;
 using Saas.Entities.Generic;
 using Saas.Entities.Models;
@@ -19,7 +15,7 @@ public class GordionDbContext :DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-           optionsBuilder.UseSqlServer(connectionString: @"Server =localhost,1401; Database =ScheduleProjects ; User Id =sa ; Password =<fanta123> ; ");
+           optionsBuilder.UseSqlServer(connectionString: @"Server = .,1401; Database =ScheduleProjects ; User Id =sa ; Password =A!VeryComplex123Password; ");
 
         //Fanta123
         //trusted_connection=true;

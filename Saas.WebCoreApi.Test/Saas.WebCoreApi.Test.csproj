@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Saas.Core\Core\Saas.Core.csproj" />
     <ProjectReference Include="..\Saas.WebCoreApi\Saas.WebCoreApi.csproj" />
   </ItemGroup>
 

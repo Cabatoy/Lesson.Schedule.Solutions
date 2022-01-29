@@ -5,8 +5,14 @@ using Saas.Entities.Dto;
 
 namespace Saas.WebCoreApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    //[Route("api/[controller]")]
+    //[ApiController]
+
+
+    [ApiVersion("1.0")] //,Deprecated = true
+    [ApiVersion("2.0")]
+    //[Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class AuthController :ControllerBase
     {
         private readonly IAuthService _authService;
@@ -29,7 +35,7 @@ namespace Saas.WebCoreApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto user)
         {
-            var userToLogin =  _authService.Login(user);
+            var userToLogin = _authService.Login(user);
             if (!userToLogin.Success)
             {
                 return BadRequest(userToLogin.Message);
@@ -51,19 +57,22 @@ namespace Saas.WebCoreApi.Controllers
         /// </summary>
         /// <param name="CompanyFirstRegisterDto"></param>
         /// <returns></returns>
-        [HttpPost("register")]
-        private async Task<IActionResult> Register(CompanyFirstRegisterDto userForRegisterDto)
+        //[HttpPost("register")]
+        [HttpPost("Register")]
+        [MapToApiVersion("2.0")]
+        [MapToApiVersion("1.0")]
+        public async Task<IActionResult> Register(CompanyFirstRegisterDto userForRegisterDto)
         {
-            var userExist =  _authService.UserExist(userForRegisterDto.Email);
+            var userExist = _authService.UserExist(userForRegisterDto.Email);
             if (!userExist.Success)
             {
                 return BadRequest(userExist.Message);
             }
-            var registerResult =  _authService.Register(userForRegisterDto);
+            var registerResult = _authService.Register(userForRegisterDto);
 
             if (registerResult.Success)
             {
-                var result =  _authService.CreateAccessToken(registerResult.Data);
+                var result = _authService.CreateAccessToken(registerResult.Data);
                 if (result.Success)
                 {
                     return Ok(result.Data);
@@ -83,7 +92,7 @@ namespace Saas.WebCoreApi.Controllers
         [HttpPost("CompanyFirstRegister")]
         public async Task<IActionResult> CompanyFirstRegister(CompanyFirstRegisterDto userForRegisterDto)
         {
-            var registerResult =  _authService.RegisterForCompany(userForRegisterDto);
+            var registerResult = _authService.RegisterForCompany(userForRegisterDto);
             if (registerResult.Success)
             {
                 if (registerResult.Success)
