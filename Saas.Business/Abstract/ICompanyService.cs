@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Saas.Core.Utilities.Results;
+using Saas.Entities.Generic;
 using Saas.Entities.Models;
 
 namespace Saas.Business.Abstract
@@ -22,6 +23,8 @@ namespace Saas.Business.Abstract
         Task<IResult> AddAsync(Company company);
         Task<IResult> DeleteAsync(Company company);
         Task<IResult> UpdateAsync(Company company);
+
+        IDataResult<IDto> SqlHelper(string query);
 
     }
 }

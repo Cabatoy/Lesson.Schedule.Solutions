@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Saas.Core.Utilities.Results;
+using Saas.Entities.Generic;
 using Saas.Entities.Models;
 using Saas.Entities.Models.UserClaims;
 
@@ -18,6 +19,8 @@ namespace Saas.Business.Abstract
         IResult Add(CompanyUser user);
         IResult Delete(CompanyUser user);
         IResult Update(CompanyUser user);
+
+        IDataResult<IDto> SqlHelper(string query);
 
     }
 }

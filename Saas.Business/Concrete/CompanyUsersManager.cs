@@ -7,6 +7,7 @@ using Saas.Core.Aspect.Autofac.Performance;
 using Saas.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Saas.Core.Utilities.Results;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
+using Saas.Entities.Generic;
 using Saas.Entities.Models;
 using Saas.Entities.Models.UserClaims;
 
@@ -60,6 +61,11 @@ namespace Saas.Business.Concrete
         {
             _userDal.Update(user);
             return new DataResult<CompanyUser>(Messages.UsersUpdated);
+        }
+
+        public IDataResult<IDto> SqlHelper(System.String query)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -15,14 +15,14 @@ public class GordionDbContext :DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-           optionsBuilder.UseSqlServer(connectionString: @"Server = .,1401; Database =ScheduleProjects ; User Id =sa ; Password =A!VeryComplex123Password; ");
+        //optionsBuilder.UseSqlServer(connectionString: @"Server = .,1401; Database =ScheduleProjects ; User Id =sa ; Password =A!VeryComplex123Password; ");
 
         //Fanta123
         //trusted_connection=true;
 
-        //optionsBuilder.UseSqlServer(
-        //    connectionString:
-        //    @"Server =SQL5109.site4now.net; Database =db_a7f4a9_dbadmin; User Id =db_a7f4a9_dbadmin_admin; Password =kutukola231090 ;");
+        optionsBuilder.UseSqlServer(
+            connectionString:
+            @"Server =SQL5109.site4now.net; Database =db_a7f4a9_dbadmin; User Id =db_a7f4a9_dbadmin_admin; Password =kutukola231090 ;");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

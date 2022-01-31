@@ -16,6 +16,7 @@ using Saas.Core.Aspect.Autofac.Validation;
 using Saas.Core.CrossCuttingConcerns.Validation;
 using Saas.Core.Utilities.Results;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
+using Saas.Entities.Generic;
 
 namespace Saas.Business.Concrete
 {
@@ -114,7 +115,7 @@ namespace Saas.Business.Concrete
         private async Task<IResult> CheckCompanyTaxNumberExistAsymc(string companyTaxNumber)
         {
             var result = await _companyDal.GetAllAsync();
-            if (result.ToList().Where(x => x.TaxNumber == "companyTaxNumber").Count() > 0)
+            if (result.ToList().Any(x => x.TaxNumber == "companyTaxNumber"))
             {
                 return new ErrorResult(message: Messages.CompanyTaxNumberExistError);
             }
@@ -139,6 +140,11 @@ namespace Saas.Business.Concrete
         {
             var companies = await _companyDal.GetAsync(companyId);
             return new DataResult<Company>(companies,true);
+        }
+
+        public IDataResult<IDto> SqlHelper(String query)
+        {
+            throw new NotImplementedException();
         }
 
 

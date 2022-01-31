@@ -33,8 +33,7 @@ namespace Saas.Entities.Models
         public string? PhoneNumberOne { get; set; }
         public string? PhoneNumberTwo { get; set; }
 
-        [Required, DefaultValue(0)]
-        public bool Deleted { get; set; }
+     
 
 
         public string? Description { get; set; }
@@ -45,5 +44,7 @@ namespace Saas.Entities.Models
         public DateTime? CreatedOn { get; set; }
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
+        [Required, DefaultValue(0)]
+        public Boolean Deleted { get ; set ; }
     }
 }

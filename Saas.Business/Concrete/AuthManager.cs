@@ -19,6 +19,7 @@ using Saas.Core.Utilities.Business;
 using Saas.Core.Utilities.Results;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
 using Saas.Entities.Dto;
+using Saas.Entities.Generic;
 using Saas.Entities.Models;
 
 namespace Saas.Business.Concrete
@@ -258,6 +259,9 @@ namespace Saas.Business.Concrete
             return new SuccessResult();
         }
 
-
+        public IDataResult<IDto> SqlHelper(String query)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

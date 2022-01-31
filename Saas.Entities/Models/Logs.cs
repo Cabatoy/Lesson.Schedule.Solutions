@@ -33,5 +33,7 @@ namespace Saas.Entities.Models
         public DateTime? CreatedOn { get; set; }
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
+        [Required, DefaultValue(0)]
+        public bool Deleted { get ; set ; }
     }
 }

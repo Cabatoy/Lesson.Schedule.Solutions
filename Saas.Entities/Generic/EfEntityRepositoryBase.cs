@@ -1,5 +1,11 @@
-﻿using System.Linq.Expressions;
+﻿using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Linq.Expressions;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Saas.Entities.Generic;
 using Saas.Entities.Models;
 
@@ -141,7 +147,7 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
     //    DbSet<TEntity> dbSet = _context.Set<TEntity>();
     //    return await dbSet.FindAsync(id);
     //}
-  
+
     private bool disposed = false;
     protected virtual void Dispose(bool disposing)
     {
@@ -163,5 +169,107 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
     }
     #endregion
 
+    #region raw Sql
+    private class PropertyMapp
+    {
+        public string Name { get; set; }
+        public Type Type { get; set; }
 
+        public bool IsSame(PropertyMapp mapp)
+        {
+            if (mapp == null)
+            {
+                return false;
+            }
+            bool same = mapp.Name == Name && mapp.Type == Type;
+            return same;
+        }
+    }
+    /*
+     * https://entityframeworkcore.com/knowledge-base/35631903/raw-sql-query-without-dbset---entity-framework-core
+     */
+    public IEnumerable<T> FromSqlQuery<T>(string query,Func<DbDataReader,T> map,params object[] parameters)
+    {
+        using var context = new TContext();
+        using (var command = context.Database.GetDbConnection().CreateCommand())
+        {
+            if (command.Connection.State != ConnectionState.Open)
+            {
+                command.Connection.Open();
+            }
+            var currentTransaction = context.Database.CurrentTransaction;
+            if (currentTransaction != null)
+            {
+                command.Transaction = currentTransaction.GetDbTransaction();
+            }
+            command.CommandText = query;
+            if (parameters.Any())
+            {
+                command.Parameters.AddRange(parameters);
+            }
+            using (var result = command.ExecuteReader())
+            {
+                while (result.Read())
+                {
+                    yield return map(result);
+                }
+            }
+        }
+    }
+
+    public  IEnumerable<T> FromSqlQuery<T>(string query,params object[] parameters) where T : new()
+    {
+        using var context = new TContext();
+        const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic;
+        List<PropertyMapp> entityFields = (from PropertyInfo aProp in typeof(T).GetProperties(flags)
+                                           select new PropertyMapp
+                                           {
+                                               Name = aProp.Name,
+                                               Type = Nullable.GetUnderlyingType(aProp.PropertyType) ?? aProp.PropertyType
+                                           }).ToList();
+        List<PropertyMapp> dbDataReaderFields = new List<PropertyMapp>();
+        List<PropertyMapp> commonFields = null;
+
+        using (var command = context.Database.GetDbConnection().CreateCommand())
+        {
+            if (command.Connection.State != ConnectionState.Open)
+            {
+                command.Connection.Open();
+            }
+            var currentTransaction = context.Database.CurrentTransaction;
+            if (currentTransaction != null)
+            {
+                command.Transaction = currentTransaction.GetDbTransaction();
+            }
+            command.CommandText = query;
+            if (parameters.Any())
+            {
+                command.Parameters.AddRange(parameters);
+            }
+            using (var result = command.ExecuteReader())
+            {
+                while (result.Read())
+                {
+                    if (commonFields == null)
+                    {
+                        for (int i = 0; i < result.FieldCount; i++)
+                        {
+                            dbDataReaderFields.Add(new PropertyMapp { Name = result.GetName(i),Type = result.GetFieldType(i) });
+                        }
+                        commonFields = entityFields.Where(x => dbDataReaderFields.Any(d => d.IsSame(x))).Select(x => x).ToList();
+                    }
+
+                    var entity = new T();
+                    foreach (var aField in commonFields)
+                    {
+                        PropertyInfo propertyInfos = entity.GetType().GetProperty(aField.Name);
+                        var value = (result[aField.Name] == DBNull.Value) ? null : result[aField.Name]; //if field is nullable
+                        propertyInfos.SetValue(entity,value,null);
+                    }
+                    yield return entity;
+                }
+            }
+        }
+    }
+    #endregion
 }

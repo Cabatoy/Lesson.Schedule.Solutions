@@ -36,7 +36,8 @@ namespace Saas.Entities.Models
 
         [Required, DefaultValue(0)]
         public bool IsAdmin { get; set; }
-
+        [Required, DefaultValue(0)]
+        public bool Deleted { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public string? UpdatedBy { get; set; }

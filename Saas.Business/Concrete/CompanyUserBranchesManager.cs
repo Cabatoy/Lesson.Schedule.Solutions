@@ -12,6 +12,7 @@ using Saas.Core.CrossCuttingConcerns.Caching;
 using Saas.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Saas.Core.Utilities.Results;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
+using Saas.Entities.Generic;
 using Saas.Entities.Models;
 
 namespace Saas.Business.Concrete
@@ -54,6 +55,11 @@ namespace Saas.Business.Concrete
         public Task<IDataResult<List<CompanyUserBranches>>> GetCompanyUserBranchesList()
         {
             return Task.FromResult<IDataResult<List<CompanyUserBranches>>>(new DataResult<List<CompanyUserBranches>>(_companyUserBranches.GetList(),true));
+        }
+
+        public IDataResult<IDto> SqlHelper(String query)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<IResult> Update(CompanyUserBranches userBranch)

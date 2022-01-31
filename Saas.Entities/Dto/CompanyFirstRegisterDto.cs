@@ -28,6 +28,7 @@ namespace Saas.Entities.Dto
             UserBranchesList = new List<int>();
         }
 
+        public bool Deleted { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public string? UpdatedBy { get; set; }

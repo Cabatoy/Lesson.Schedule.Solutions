@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System.Data.Common;
+using System.Linq.Expressions;
 
 namespace Saas.Entities.Generic;
 
@@ -15,5 +16,7 @@ public interface IEntityRepository<T> where T : class, IEntity, new()
     void Add(T entity);
     void Update(T entity);
     void Delete(T entity);
-    
+
+    IEnumerable<T> FromSqlQuery<T>(string query, Func<DbDataReader, T> map, params object[] parameters);
+    public IEnumerable<T> FromSqlQuery<T>(string query, params object[] parameters) where T : new();
 }
