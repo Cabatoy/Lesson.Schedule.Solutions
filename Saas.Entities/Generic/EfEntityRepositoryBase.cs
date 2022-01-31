@@ -67,12 +67,10 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
         return await _context.Set<TEntity>().ToListAsync();
     }
 
-    public virtual async Task<TEntity> GetAsync(int id)
+    public virtual async Task<TEntity?> GetAsync(int id)
     {
         using var _context = new TContext();
-#pragma warning disable CS8603 // Possible null reference return.
         return await _context.Set<TEntity>().FindAsync(id);
-#pragma warning restore CS8603 // Possible null reference return.
     }
 
     public virtual async Task<TEntity> AddAsyn(TEntity t)
@@ -130,12 +128,20 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
         return await _context.SaveChangesAsync();
     }
 
-    public virtual async Task<ICollection<TEntity>> FindByAsyn(Expression<Func<TEntity,bool>> predicate)
+    public virtual async Task<ICollection<TEntity>> FindByAsync(Expression<Func<TEntity,bool>> predicate)
     {
         using var _context = new TContext();
         return await _context.Set<TEntity>().Where(predicate).ToListAsync();
     }
 
+    //alternatif kullanim bicimi
+    //public virtual async Task<TEntity?> GetById(int id)
+    //{
+    //    using var _context = new TContext();
+    //    DbSet<TEntity> dbSet = _context.Set<TEntity>();
+    //    return await dbSet.FindAsync(id);
+    //}
+  
     private bool disposed = false;
     protected virtual void Dispose(bool disposing)
     {
