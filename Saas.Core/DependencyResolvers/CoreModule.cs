@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Saas.Core.CrossCuttingConcerns.Caching;
 using Saas.Core.CrossCuttingConcerns.Caching.Microsoft;
-using Saas.Core.CrossCuttingConcerns.Caching.Redis;
-using Saas.Core.CrossCuttingConcerns.Mailing;
-using Saas.Core.CrossCuttingConcerns.Mailing.FluentEmail;
 using Saas.Core.Utilities.IoC;
 
 namespace Saas.Core.DependencyResolvers

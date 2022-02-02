@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Saas.Core.Utilities.Results;
+using Saas.Entities.Generic;
 using Saas.Entities.Models;
 
 namespace Saas.Business.Abstract
@@ -15,5 +16,8 @@ namespace Saas.Business.Abstract
         IResult Add(CompanyBranch companyBranch);
         IResult Delete(CompanyBranch companyBranch);
         IResult Update(CompanyBranch companyBranch);
+
+        IDataResult<IDto> SqlHelper(string query);
+
     }
 }

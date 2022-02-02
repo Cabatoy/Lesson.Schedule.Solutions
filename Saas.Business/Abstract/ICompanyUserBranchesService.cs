@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Saas.Core.Utilities.Results;
+using Saas.Entities.Generic;
 using Saas.Entities.Models;
 
 namespace Saas.Business.Abstract
@@ -15,5 +13,7 @@ namespace Saas.Business.Abstract
         Task<IResult> Add(CompanyUserBranches company);
         Task<IResult> Delete(CompanyUserBranches company);
         Task<IResult> Update(CompanyUserBranches company);
+
+        IDataResult<IDto> SqlHelper(string query);
     }
 }

@@ -2,6 +2,8 @@
 
 public interface IEntity
 {
+   
+    public bool Deleted { get; set; }
     string CreatedBy { get; set; }
     DateTime? CreatedOn { get; set; }
     string? UpdatedBy { get; set; }

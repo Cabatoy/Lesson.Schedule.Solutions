@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Saas.Business.Abstract;
 using Saas.Entities.Models;
 using Saas.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
@@ -16,6 +15,7 @@ using Saas.Core.Aspect.Autofac.Validation;
 using Saas.Core.CrossCuttingConcerns.Validation;
 using Saas.Core.Utilities.Results;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
+using Saas.Entities.Generic;
 
 namespace Saas.Business.Concrete
 {
@@ -102,19 +102,19 @@ namespace Saas.Business.Concrete
         public async Task<IResult> DeleteAsync(Company company)
         {
             company.Deleted = true;
-            var result = await _companyDal.UpdateAsyn(company,company.Id);
+             await _companyDal.UpdateAsyn(company,company.Id);
             return new DataResult<Company>(Messages.CompanyUpdated);
         }
         [LogAspect(typeof(DatabaseLogger))]
         public async Task<IResult> UpdateAsync(Company company)
         {
-            var result = await _companyDal.UpdateAsyn(company,company.Id);
+            await _companyDal.UpdateAsyn(company,company.Id);
             return new DataResult<Company>(Messages.CompanyUpdated);
         }
         private async Task<IResult> CheckCompanyTaxNumberExistAsymc(string companyTaxNumber)
         {
             var result = await _companyDal.GetAllAsync();
-            if (result.ToList().Where(x => x.TaxNumber == "companyTaxNumber").Count() > 0)
+            if (result.ToList().Any(x => x.TaxNumber == companyTaxNumber))
             {
                 return new ErrorResult(message: Messages.CompanyTaxNumberExistError);
             }
@@ -139,6 +139,11 @@ namespace Saas.Business.Concrete
         {
             var companies = await _companyDal.GetAsync(companyId);
             return new DataResult<Company>(companies,true);
+        }
+
+        public IDataResult<IDto> SqlHelper(String query)
+        {
+            throw new NotImplementedException();
         }
 
 

@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Saas.Entities.Generic;
-using Saas.Entities.Models;
 
 namespace Saas.Entities.Models.UserClaims
 {
@@ -32,6 +26,7 @@ namespace Saas.Entities.Models.UserClaims
         [ForeignKey("CompanyOperationClaimId")]
         public virtual CompanyOperationClaim OperationClaim { get; set; }
 
+        public bool Deleted { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public string? UpdatedBy { get; set; }

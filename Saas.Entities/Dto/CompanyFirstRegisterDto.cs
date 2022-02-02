@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Saas.Entities.Generic;
-using Saas.Entities.Models;
+﻿using Saas.Entities.Generic;
 
 namespace Saas.Entities.Dto
 {
@@ -28,6 +22,7 @@ namespace Saas.Entities.Dto
             UserBranchesList = new List<int>();
         }
 
+        public bool Deleted { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public string? UpdatedBy { get; set; }

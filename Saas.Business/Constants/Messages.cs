@@ -1,6 +1,4 @@
-﻿using Saas.Entities.Models;
-
-namespace Saas.Business.Constants
+﻿namespace Saas.Business.Constants
 {
     public static class Messages
     {
@@ -25,15 +23,15 @@ namespace Saas.Business.Constants
         //public static string rolesDeleted = "Rol Bilgisi Başarı ile silindi";
 
 
-        public static string UsersAdded = "Kullanici Başarı ile eklendi";
-        public static string UsersUpdated = "Kullanici Bilgisi Başarı ile güncellendi";
-        public static string UsersDeleted = "Kullanici Bilgisi Başarı ile silindi";
+        public static readonly string UsersAdded = "Kullanici Başarı ile eklendi";
+        public static readonly string UsersUpdated = "Kullanici Bilgisi Başarı ile güncellendi";
+        public static readonly string UsersDeleted = "Kullanici Bilgisi Başarı ile silindi";
 
-        public static string UserNotFound = "Kullanıcı Bulunamadı.";
-        public static string PasswordError = "Kullanıcı veya Sifre Hatali";
-        public static string SuccessfullLogin = "Sisteme Giris Basarili";
-        public static string UserAlreadyExist = "Kullanıcı daha önce kayıt olmuştur.";
-        public static string AccessTokenCreated = "Token Oluşturuldu.";
+        public static readonly string UserNotFound = "Kullanıcı Bulunamadı.";
+        public static readonly string PasswordError = "Kullanıcı veya Sifre Hatali";
+        public static readonly string SuccessfullLogin = "Sisteme Giris Basarili";
+        public static readonly string UserAlreadyExist = "Kullanıcı daha önce kayıt olmuştur.";
+        public static readonly string AccessTokenCreated = "Token Oluşturuldu.";
 
 
         #region ValidationMessages
@@ -44,13 +42,13 @@ namespace Saas.Business.Constants
         #endregion
 
 
-        public static string AuthorizationDenied = "Yetkiniz Bu İşlemi Yapmaya Uygun Değil.";
+        public static readonly string AuthorizationDenied = "Yetkiniz Bu İşlemi Yapmaya Uygun Değil.";
 
-        public static string CompanyTaxNumberExistError = "Firma Daha Önce Kayıt Edilmiştir.";
+        public static readonly string CompanyTaxNumberExistError = "Firma Daha Önce Kayıt Edilmiştir.";
 
-        public static string EmailCanNotBlank = "Mail Adresi Bos Birakilamaz";
+        public static readonly string EmailCanNotBlank = "Mail Adresi Bos Birakilamaz";
 
-        internal static readonly string rolesAdded = "Rol Eklendi.";
+        public static readonly string rolesAdded = "Rol Eklendi.";
         public static readonly string rolesDeleted = "Rol Silindi.";
         public static readonly string rolesUpdated = "Rol Güncellendi.";
 

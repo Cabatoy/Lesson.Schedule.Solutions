@@ -1,4 +1,3 @@
-using System.Configuration;
 using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -13,7 +12,6 @@ using Saas.Core.Extensions;
 using Saas.Core.Security.Security.Encyption;
 using Saas.Core.Utilities.IoC;
 using Saas.DataAccess.EntityFrameWorkCore.DbContexts;
-using ServiceStack;
 using TokenOptions = Saas.Core.Security.Security.Jwt.TokenOptions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -77,7 +75,7 @@ builder.Services.AddSwaggerGen(options =>
         TermsOfService = new Uri("https://example.com/terms"),
         Contact = new OpenApiContact
         {
-            Name = "Çahatay Özdemir",
+            Name = "ï¿½ahatay ï¿½zdemir",
             //Url = "",
             Email = "cahatayozdemir@gmail.com",
         },
@@ -112,7 +110,7 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
-//debug ederken burayi kapatirsan hatalari kabak gibi gorebilirsin Çahatay
+//debug ederken burayi kapatirsan hatalari kabak gibi gorebilirsin ï¿½ahatay
 //app.ConfigureCustomExceptionMiddleware();
 
 app.UseCors(builder => builder.WithOrigins("http://localhost:3000").AllowAnyHeader());

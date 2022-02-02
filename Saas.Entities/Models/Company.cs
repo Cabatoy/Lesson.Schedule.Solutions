@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Saas.Entities.Generic;
 
@@ -15,26 +10,25 @@ namespace Saas.Entities.Models
     [Table("Company",Schema = "Company")]
     public class Company :IEntity
     {
-        private String fullName;
-        private String taxNumber;
+        private String _fullName;
+        private String _taxNumber;
 
         [Key]
         public int Id { get; set; }
 
         [Required]
-        public string FullName { get => fullName; init => fullName = value; }
+        public string FullName { get => _fullName; init => _fullName = value; }
 
         public string? Adress { get; set; }
 
 
         [Required, MaxLength(11)]
-        public string TaxNumber { get => taxNumber; init => taxNumber = value; }
+        public string TaxNumber { get => _taxNumber; init => _taxNumber = value; }
         public string? TaxOffice { get; set; }
         public string? PhoneNumberOne { get; set; }
         public string? PhoneNumberTwo { get; set; }
 
-        [Required, DefaultValue(0)]
-        public bool Deleted { get; set; }
+     
 
 
         public string? Description { get; set; }
@@ -45,5 +39,7 @@ namespace Saas.Entities.Models
         public DateTime? CreatedOn { get; set; }
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
+        [Required, DefaultValue(0)]
+        public Boolean Deleted { get ; set ; }
     }
 }

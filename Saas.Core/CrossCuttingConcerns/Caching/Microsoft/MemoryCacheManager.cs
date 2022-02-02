@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using Saas.Core.CrossCuttingConcerns.Caching;
 using Saas.Core.Utilities.IoC;
 
 namespace Saas.Core.CrossCuttingConcerns.Caching.Microsoft

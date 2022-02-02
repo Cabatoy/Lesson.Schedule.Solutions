@@ -16,13 +16,11 @@ namespace Saas.Core.Security.Security.Jwt
 {
     public class JwtHelper :ITokenHelper
     {
-        private IConfiguration Configuration { get; }
         private readonly TokenOptions _tokenOptions;
         private DateTime _accessTokenExpiration;
 
         public JwtHelper(IConfiguration configuration)
         {
-            Configuration = configuration;
             _tokenOptions = configuration.GetSection("TokenOptions").Get<TokenOptions>();
             //configuration.GetSection("TokenOptions") as TokenOptions;
 

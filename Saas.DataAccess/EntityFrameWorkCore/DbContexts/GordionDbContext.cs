@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Principal;
 using Microsoft.EntityFrameworkCore;
 using Saas.Entities.Generic;
 using Saas.Entities.Models;
@@ -15,14 +10,14 @@ public class GordionDbContext :DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-           optionsBuilder.UseSqlServer(connectionString: @"Server = .,1401; Database =ScheduleProjects ; User Id =sa ; Password =A!VeryComplex123Password; ");
+        //optionsBuilder.UseSqlServer(connectionString: @"Server = .,1401; Database =ScheduleProjects ; User Id =sa ; Password =A!VeryComplex123Password; ");
 
         //Fanta123
         //trusted_connection=true;
 
-        //optionsBuilder.UseSqlServer(
-        //    connectionString:
-        //    @"Server =SQL5109.site4now.net; Database =db_a7f4a9_dbadmin; User Id =db_a7f4a9_dbadmin_admin; Password =kutukola231090 ;");
+        optionsBuilder.UseSqlServer(
+            connectionString:
+            @"Server =SQL5109.site4now.net; Database =db_a7f4a9_dbadmin; User Id =db_a7f4a9_dbadmin_admin; Password =kutukola231090 ;");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -134,14 +129,20 @@ public class GordionDbContext :DbContext
                 var auditable = entry.Entity as IEntity;
                 if (entry.State == EntityState.Added)
                 {
-                    auditable.CreatedBy = UserProvider;//  
-                    auditable.CreatedOn = TimestampProvider();
-                    auditable.UpdatedOn = TimestampProvider();
+                    if (auditable != null)
+                    {
+                        auditable.CreatedBy = UserProvider; //  
+                        auditable.CreatedOn = TimestampProvider();
+                        auditable.UpdatedOn = TimestampProvider();
+                    }
                 }
                 else
                 {
-                    auditable.UpdatedBy = UserProvider;
-                    auditable.UpdatedOn = TimestampProvider();
+                    if (auditable != null)
+                    {
+                        auditable.UpdatedBy = UserProvider;
+                        auditable.UpdatedOn = TimestampProvider();
+                    }
                 }
             }
         }

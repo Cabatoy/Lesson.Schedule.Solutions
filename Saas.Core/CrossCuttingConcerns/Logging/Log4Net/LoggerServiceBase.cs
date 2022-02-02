@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
-using Castle.Core.Logging;
 using log4net;
 using log4net.Repository;
-using log4net.Util;
-using Saas.Core.CrossCuttingConcerns.Logging;
 
 
 namespace Saas.Core.CrossCuttingConcerns.Logging.Log4Net

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Reflection;
-using System.Threading.Tasks;
 using Castle.DynamicProxy;
 
 namespace Saas.Core.Utilities.Interceptors
@@ -51,14 +48,6 @@ namespace Saas.Core.Utilities.Interceptors
                     OnSuccess(invocation);
             }
             OnAfter(invocation);
-        }
-       
-        private static bool IsAsyncMethod(MethodInfo method)
-        {//invocation.Method)
-            return (
-                method.ReturnType == typeof(Task) ||
-                (method.ReturnType.IsGenericType && method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
-            );
         }
     }
 
