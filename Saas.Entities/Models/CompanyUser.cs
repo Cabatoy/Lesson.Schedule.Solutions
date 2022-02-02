@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Saas.Entities.Generic;
 
@@ -15,12 +10,12 @@ namespace Saas.Entities.Models
     [Table("CompanyUser",Schema = "Company")]
     public class CompanyUser :IEntity
     {
-        private Company company;
-        private String fullName;
-        private String email;
-        private Byte[] passWordHash;
-        private Byte[] passWordSalt;
-        private List<CompanyUserBranches> userBranches;
+        private Company _company;
+        private String _fullName;
+        private String _email;
+        private Byte[] _passWordHash;
+        private Byte[] _passWordSalt;
+        private List<CompanyUserBranches> _userBranches;
 
         [Key]
         public int Id { get; set; }
@@ -29,7 +24,7 @@ namespace Saas.Entities.Models
         public virtual int CompanyId { get; set; }
 
         [ForeignKey("CompanyId")]
-        public virtual Company Company { get => company; set => company = value; }
+        public virtual Company Company { get => _company; set => _company = value; }
 
 
         //[Display(Name = "Branch")]
@@ -40,16 +35,16 @@ namespace Saas.Entities.Models
 
 
         [Required]
-        public string FullName { get => fullName; init => fullName = value; }
+        public string FullName { get => _fullName; init => _fullName = value; }
 
         [Required]
-        public string Email { get => email; init => email = value; }
+        public string Email { get => _email; init => _email = value; }
 
         [Required]
-        public byte[] PassWordSalt { get => passWordSalt; init => passWordSalt = value; }
+        public byte[] PassWordSalt { get => _passWordSalt; init => _passWordSalt = value; }
 
         [Required]
-        public byte[] PassWordHash { get => passWordHash; init => passWordHash = value; }
+        public byte[] PassWordHash { get => _passWordHash; init => _passWordHash = value; }
 
         [Required, DefaultValue(0), Comment("IsStudent? Yes-No")]
         public bool IsStudent { get; set; }
@@ -63,7 +58,7 @@ namespace Saas.Entities.Models
         [Required, DefaultValue(0)]
         public bool Deleted { get; set; }
 
-        public virtual List<CompanyUserBranches> UserBranches { get => userBranches; set => userBranches = value; }
+        public virtual List<CompanyUserBranches> UserBranches { get => _userBranches; set => _userBranches = value; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public string? UpdatedBy { get; set; }

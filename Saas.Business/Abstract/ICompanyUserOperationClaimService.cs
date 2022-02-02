@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Saas.Core.Utilities.Results;
 using Saas.Entities.Models.UserClaims;
 

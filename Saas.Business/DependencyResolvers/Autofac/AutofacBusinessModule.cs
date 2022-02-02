@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
-using Microsoft.Extensions.Caching.Distributed;
 using Saas.Business.Abstract;
 using Saas.Business.Concrete;
 using Saas.Core.Security.Security.Jwt;

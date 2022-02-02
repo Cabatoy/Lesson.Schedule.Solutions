@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
-namespace Saas.Entities.Generic;
+﻿namespace Saas.Entities.Generic;
 
 public interface IEntity
 {

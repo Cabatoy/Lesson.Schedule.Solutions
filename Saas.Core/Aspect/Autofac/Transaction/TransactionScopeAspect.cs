@@ -1,5 +1,4 @@
-﻿using System;
-using System.Transactions;
+﻿using System.Transactions;
 using Castle.DynamicProxy;
 using Saas.Core.Utilities.Interceptors;
 
@@ -16,9 +15,9 @@ namespace Saas.Core.Aspect.Autofac.Transaction
                 transactionScope.Complete();
 
             }
-            catch (System.Exception)
+            catch (TransactionException exception)
             {
-                throw;
+                throw exception;
             }
             finally
             {

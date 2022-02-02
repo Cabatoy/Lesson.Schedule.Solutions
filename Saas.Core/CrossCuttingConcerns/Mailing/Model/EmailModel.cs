@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Saas.Core.CrossCuttingConcerns.Mailing.Model
 {
@@ -68,6 +64,7 @@ namespace Saas.Core.CrossCuttingConcerns.Mailing.Model
 
         public override int GetHashCode()
         {
+            // ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode
             return base.GetHashCode();
         }
 

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Saas.Core.Aspect.Autofac.Exception;
 using Saas.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
@@ -20,6 +17,7 @@ namespace Saas.Core.Utilities.Interceptors
             classAttribute.AddRange(methodAttribute);
             classAttribute.Add(new ExceptionLogAspect(typeof(DatabaseLogger)));
             //  classAttribute.Add(new ExceptionLogAspect(typeof(FileLogger)));
+            // ReSharper disable once CoVariantArrayConversion
             return classAttribute.OrderBy(x => x.Priority).ToArray();
         }
     }

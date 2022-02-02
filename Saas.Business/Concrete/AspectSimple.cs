@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Saas.Business.Concrete
+﻿namespace Saas.Business.Concrete
 {
     class AspectSimple
     {

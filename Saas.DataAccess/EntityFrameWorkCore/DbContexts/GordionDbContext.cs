@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Principal;
 using Microsoft.EntityFrameworkCore;
 using Saas.Entities.Generic;
 using Saas.Entities.Models;
@@ -134,14 +129,20 @@ public class GordionDbContext :DbContext
                 var auditable = entry.Entity as IEntity;
                 if (entry.State == EntityState.Added)
                 {
-                    auditable.CreatedBy = UserProvider;//  
-                    auditable.CreatedOn = TimestampProvider();
-                    auditable.UpdatedOn = TimestampProvider();
+                    if (auditable != null)
+                    {
+                        auditable.CreatedBy = UserProvider; //  
+                        auditable.CreatedOn = TimestampProvider();
+                        auditable.UpdatedOn = TimestampProvider();
+                    }
                 }
                 else
                 {
-                    auditable.UpdatedBy = UserProvider;
-                    auditable.UpdatedOn = TimestampProvider();
+                    if (auditable != null)
+                    {
+                        auditable.UpdatedBy = UserProvider;
+                        auditable.UpdatedOn = TimestampProvider();
+                    }
                 }
             }
         }

@@ -1,6 +1,4 @@
-﻿
-using System.Threading.Tasks;
-using Saas.Core.Security.Security.Jwt;
+﻿using Saas.Core.Security.Security.Jwt;
 using Saas.Core.Utilities.Results;
 using Saas.Entities.Dto;
 using Saas.Entities.Generic;

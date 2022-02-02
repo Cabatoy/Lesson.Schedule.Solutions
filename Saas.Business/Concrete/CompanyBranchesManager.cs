@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Saas.Business.Abstract;
 using Saas.Core.Aspect.Autofac.Caching;
 using Saas.Core.Aspect.Autofac.Logging;
-using Saas.Core.Aspect.Autofac.Performance;
 using Saas.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Saas.Core.Utilities.Results;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
@@ -20,7 +17,6 @@ namespace Saas.Business.Concrete
     public class CompanyBranchesManager :ICompanyBranchesService
     {
         private readonly ICompanyBranchDal _branchDal;
-        private IEnumerable<CompanyBranch> _companyBranches;
 
         public CompanyBranchesManager(ICompanyBranchDal branchDal)
         {
@@ -35,7 +31,7 @@ namespace Saas.Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<CompanyBranch> CompanyBranchById(Int32 branchId)
         {
-            _companyBranches = _branchDal.GetList().Where(x => x.Id == branchId);
+            _branchDal.GetList().Where(x => x.Id == branchId);
             return new DataResult<CompanyBranch>("");
         }
         [CacheAspect(duration: 10)]  //10 dakika boyunca cache te sonra db den tekrar cache e seklinde bir dongu

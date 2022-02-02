@@ -1,13 +1,9 @@
 ﻿using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
-using Saas.Entities.Generic;
-using Saas.Entities.Models;
 
 namespace Saas.Entities.Generic;
 
@@ -23,7 +19,7 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
         using var context = new TContext();
         var addedcontext = context.Entry(entity);
         addedcontext.State = EntityState.Added;
-        var ss = context.SaveChanges();//  SaveChanges();
+        context.SaveChanges();//  SaveChanges();
         //gonderilen entity i context e abone ettik.
         //ister update ister delete ne yapacaksan 
     }
@@ -61,62 +57,57 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
 
     #region async
 
-    public virtual IQueryable<TEntity> GetAll()
-    {
-        using var _context = new TContext();
-        return _context.Set<TEntity>();
-    }
-
+   
     public virtual async Task<ICollection<TEntity>> GetAllAsync()
     {
-        using var _context = new TContext();
-        return await _context.Set<TEntity>().ToListAsync();
+        using var context = new TContext();
+        return await context.Set<TEntity>().ToListAsync();
     }
 
     public virtual async Task<TEntity?> GetAsync(int id)
     {
-        using var _context = new TContext();
-        return await _context.Set<TEntity>().FindAsync(id);
+        using var context = new TContext();
+        return await context.Set<TEntity>().FindAsync(id);
     }
 
     public virtual async Task<TEntity> AddAsyn(TEntity t)
     {
-        using var _context = new TContext();
-        _context.Set<TEntity>().Add(t);
-        await _context.SaveChangesAsync();
+        using var context = new TContext();
+        context.Set<TEntity>().Add(t);
+        await context.SaveChangesAsync();
         return t;
 
     }
 
-    public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity,bool>> match)
+    public virtual async Task<TEntity?> FindAsync(Expression<Func<TEntity,bool>> match)
     {
-        using var _context = new TContext();
-        return await _context.Set<TEntity>().SingleOrDefaultAsync(match);
+        using var context = new TContext();
+        return await context.Set<TEntity>().SingleOrDefaultAsync(match);
     }
 
     public virtual async Task<ICollection<TEntity>> FindAllAsync(Expression<Func<TEntity,bool>> match)
     {
-        using var _context = new TContext();
-        return await _context.Set<TEntity>().Where(match).ToListAsync();
+        using var context = new TContext();
+        return await context.Set<TEntity>().Where(match).ToListAsync();
     }
 
     public virtual async Task<int> DeleteAsyn(TEntity entity)
     {
-        using var _context = new TContext();
-        _context.Set<TEntity>().Remove(entity);
-        return await _context.SaveChangesAsync();
+        using var context = new TContext();
+        context.Set<TEntity>().Remove(entity);
+        return await context.SaveChangesAsync();
     }
 
-    public virtual async Task<TEntity> UpdateAsyn(TEntity t,object key)
+    public virtual async Task<TEntity> UpdateAsyn(TEntity? t,object key)
     {
-        using var _context = new TContext();
+        using var context = new TContext();
         if (t == null)
             return null;
-        TEntity exist = await _context.Set<TEntity>().FindAsync(key);
+        TEntity exist = await context.Set<TEntity>().FindAsync(key);
         if (exist != null)
         {
-            _context.Entry(exist).CurrentValues.SetValues(t);
-            await _context.SaveChangesAsync();
+            context.Entry(exist).CurrentValues.SetValues(t);
+            await context.SaveChangesAsync();
         }
         return exist;
     }
@@ -124,20 +115,20 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
 
     public virtual async Task<int> CountAsync()
     {
-        using var _context = new TContext();
-        return await _context.Set<TEntity>().CountAsync();
+        using var context = new TContext();
+        return await context.Set<TEntity>().CountAsync();
     }
 
     public virtual async Task<int> SaveAsync()
     {
-        using var _context = new TContext();
-        return await _context.SaveChangesAsync();
+        using var context = new TContext();
+        return await context.SaveChangesAsync();
     }
 
     public virtual async Task<ICollection<TEntity>> FindByAsync(Expression<Func<TEntity,bool>> predicate)
     {
-        using var _context = new TContext();
-        return await _context.Set<TEntity>().Where(predicate).ToListAsync();
+        using var context = new TContext();
+        return await context.Set<TEntity>().Where(predicate).ToListAsync();
     }
 
     //alternatif kullanim bicimi
@@ -148,17 +139,17 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
     //    return await dbSet.FindAsync(id);
     //}
 
-    private bool disposed = false;
+    private bool _disposed = false;
     protected virtual void Dispose(bool disposing)
     {
-        using var _context = new TContext();
-        if (!this.disposed)
+        using var context = new TContext();
+        if (!this._disposed)
         {
             if (disposing)
             {
-                _context.Dispose();
+                context.Dispose();
             }
-            this.disposed = true;
+            this._disposed = true;
         }
     }
 
@@ -172,10 +163,10 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
     #region raw Sql
     private class PropertyMapp
     {
-        public string Name { get; set; }
-        public Type Type { get; set; }
+        public string? Name { get; set; }
+        public Type? Type { get; set; }
 
-        public bool IsSame(PropertyMapp mapp)
+        public bool IsSame(PropertyMapp? mapp)
         {
             if (mapp == null)
             {
@@ -193,7 +184,7 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
         using var context = new TContext();
         using (var command = context.Database.GetDbConnection().CreateCommand())
         {
-            if (command.Connection.State != ConnectionState.Open)
+            if (command.Connection != null && command.Connection.State != ConnectionState.Open)
             {
                 command.Connection.Open();
             }
@@ -228,11 +219,11 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
                                                Type = Nullable.GetUnderlyingType(aProp.PropertyType) ?? aProp.PropertyType
                                            }).ToList();
         List<PropertyMapp> dbDataReaderFields = new List<PropertyMapp>();
-        List<PropertyMapp> commonFields = null;
+        List<PropertyMapp>? commonFields = null;
 
         using (var command = context.Database.GetDbConnection().CreateCommand())
         {
-            if (command.Connection.State != ConnectionState.Open)
+            if (command.Connection != null && command.Connection.State != ConnectionState.Open)
             {
                 command.Connection.Open();
             }
@@ -262,9 +253,12 @@ public class EfEntityRepositoryBase<TEntity, TContext> :IEntityRepository<TEntit
                     var entity = new T();
                     foreach (var aField in commonFields)
                     {
-                        PropertyInfo propertyInfos = entity.GetType().GetProperty(aField.Name);
-                        var value = (result[aField.Name] == DBNull.Value) ? null : result[aField.Name]; //if field is nullable
-                        propertyInfos.SetValue(entity,value,null);
+                        if (aField.Name != null)
+                        {
+                            PropertyInfo? propertyInfos = entity.GetType().GetProperty(aField.Name);
+                            var value = (result[aField.Name] == DBNull.Value) ? null : result[aField.Name]; //if field is nullable
+                            propertyInfos?.SetValue(entity,value,null);
+                        }
                     }
                     yield return entity;
                 }

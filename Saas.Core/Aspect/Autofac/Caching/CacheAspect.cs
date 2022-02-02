@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Castle.DynamicProxy;
 using Microsoft.Extensions.DependencyInjection;
 using Saas.Core.CrossCuttingConcerns.Caching;
@@ -38,21 +32,14 @@ namespace Saas.Core.Aspect.Autofac.Caching
                 {
                     //invocation.ReturnValue = _cacheManager.Get(key);
                     //return;
-                    if (invocation != null)
-                    {
+                    invocation.ReturnValue = _cacheManager.Get(key);
                         
-                        invocation.ReturnValue = _cacheManager.Get(key);
-                        
-                        return;
-                    }
+                    return;
                 }
                 //invocation.Proceed();
                 //_cacheManager.Add(key, invocation.ReturnValue, _duration);
-                if (invocation != null)
-                {
-                    invocation.Proceed();
-                    _cacheManager.Add(key,invocation.ReturnValue,_duration);
-                }
+                invocation.Proceed();
+                _cacheManager.Add(key,invocation.ReturnValue,_duration);
             }
         }
 

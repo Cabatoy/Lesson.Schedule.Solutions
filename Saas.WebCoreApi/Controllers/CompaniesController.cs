@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Saas.Business.Abstract;
-using Saas.Entities.Generic;
 using Saas.Entities.Models;
-using Saas.WebCoreApi.ControllerModel;
 
 namespace Saas.WebCoreApi.Controllers
 {

@@ -3,7 +3,6 @@ using Saas.Business.Abstract;
 using Saas.Business.Constants;
 using Saas.Core.Aspect.Autofac.Caching;
 using Saas.Core.Aspect.Autofac.Logging;
-using Saas.Core.Aspect.Autofac.Performance;
 using Saas.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Saas.Core.Utilities.Results;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;

@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Saas.Business.Abstract;
-using Saas.Business.Constants;
 using Saas.Core.Aspect.Autofac.Caching;
 using Saas.Core.Aspect.Autofac.Logging;
 using Saas.Core.Aspect.Autofac.Performance;
-using Saas.Core.CrossCuttingConcerns.Caching;
 using Saas.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Saas.Core.Utilities.Results;
 using Saas.DataAccess.EntityFrameWorkCore.IDal;
@@ -22,7 +18,7 @@ namespace Saas.Business.Concrete
         private readonly ICompanyUserBranchesDal _companyUserBranches;
 
 
-        public CompanyUserBranchesManager(ICompanyUserBranchesDal companyUserBranchesDal,ICacheManager cacheManager)
+        public CompanyUserBranchesManager(ICompanyUserBranchesDal companyUserBranchesDal)
         {
             _companyUserBranches = companyUserBranchesDal;
         }
